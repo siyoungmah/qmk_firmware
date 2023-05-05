@@ -43,25 +43,25 @@ void oled_render_layer_state(void) {
     oled_write_P(PSTR("Layer"), false);
     switch (get_highest_layer(layer_state | default_layer_state)) {
         case L_COLEMAK:
-            oled_write_P(PSTR("Colemak\n"), false);
+            oled_write_ln_P(PSTR("Colemak"), false);
             break;
         case L_QWERTY:
-            oled_write_P(PSTR("QWERTY\n"), false);
+            oled_write_ln_P(PSTR("QWERTY"), false);
             break;
         case L_FUNC:
-            oled_write_P(PSTR("FUNC\n"), false);
+            oled_write_ln_P(PSTR("FUNC\n"), false);
             break;
         case L_NUM:
-            oled_write_P(PSTR("NUM\n"), false);
+            oled_write_ln_P(PSTR("NUM\n"), false);
             break;
         case L_SYMBOLS:
-            oled_write_P(PSTR("Symbols\n"), false);
+            oled_write_ln_P(PSTR("Symbols\n"), false);
             break;
         case L_NAV:
-            oled_write_P(PSTR("NAV\n"), false);
+            oled_write_ln_P(PSTR("NAV\n"), false);
             break;  
         default:
-            oled_write_P(PSTR("Undefined\n"), false);
+            oled_write_ln_P(PSTR("Undefined"), false);
     }
 }
 
