@@ -20,7 +20,7 @@
 
 #include QMK_KEYBOARD_H
 
-
+#ifdef OLED_ENABLE
 static void render_logo(void) {
 	static char const corne_logo[] PROGMEM = {
 		0x80, 0x81, 0x82, 0x83, 0x84,
@@ -160,3 +160,4 @@ void render_mod_status(void) {
 	render_gui_alt(mods & MOD_MASK_GUI, mods & MOD_MASK_ALT);
 	render_ctrl_shift(mods & MOD_MASK_CTRL, mods & MOD_MASK_SHIFT || host_keyboard_led_state().caps_lock);
 }
+#endif // OLED_ENABLE

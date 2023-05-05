@@ -26,6 +26,8 @@
 
 #include QMK_KEYBOARD_H
 
+#ifdef OLED_ENABLE
+
 #define IDLE_FRAMES 5
 #define TAP_FRAMES  2
 #define FRAME_DURATION 200 // milliseconds
@@ -275,3 +277,4 @@ bool oled_task_user(void) {
 	is_keyboard_master() ? render_bongocat() : render_mod_status();
 	return false;
 }
+#endif // OLED_ENABLE

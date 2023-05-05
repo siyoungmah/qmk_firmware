@@ -18,7 +18,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include QMK_KEYBOARD_H
 #include <stdio.h>
+#include "os_detection.h"
 
+//====CUSTOM KEYS AND SHORTHANDS=======
 // macOS shortcuts
 #define CTRL_UP LCTL(KC_UP)
 #define CMD_SPC LGUI(KC_SPC)
@@ -38,7 +40,40 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define ESC_GRV0 LT(0, KC_GRV)
 #define ESC_GRV1 LT(1, KC_GRV)
 
+// =======Tap Dancing=======
 
+// Tap Dance keycodes
+enum td_keycodes {
+    TD_LP, // single tap (, double tap [, hold {
+    TD_RP, // single tap ), double tap ], hold }};
+};
+
+// Define a type containing as many tapdance states as you need
+typedef enum {
+    TD_NONE,
+    TD_UNKNOWN,
+    TD_SINGLE_TAP,
+    TD_SINGLE_HOLD,
+    TD_DOUBLE_TAP,
+    TD_DOUBLE_SINGLE_TAP // send two single taps
+} td_state_t;
+
+// Create a global instance of the tapdance state type
+static td_state_t td_state;
+
+// Declare your tapdance functions:
+
+// Function to determine the current tapdance state
+td_state_t cur_dance(tap_dance_state_t *state);
+
+// `finished` and `reset` functions for each tapdance keycode
+void tdlp_finished(tap_dance_state_t *state, void *user_data);
+void tdlp_reset(tap_dance_state_t *state, void *user_data);
+void tdrp_finished(tap_dance_state_t *state, void *user_data);
+void tdrp_reset(tap_dance_state_t *state, void *user_data);
+
+
+//=======LAYOUT==========
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // base, Colemak_DH
@@ -93,8 +128,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //| CMD/CTRL |    F10 |     F1 |     F2 |     F3 |        |                    |        |        |        |         |        |        |
         CG_NORM,  KC_F10,   KC_F1,   KC_F2,   KC_F3,   KC_NO,                        KC_NO,   KC_NO,   KC_NO,    KC_NO,   KC_NO,   KC_NO, 
   //|----------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+---------+--------+--------|
-                                        //|        |    SPC |    TAB |  |        |   BSPC |    DEL |
-                                              KC_NO,  KC_SPC,  KC_TAB,    KC_TRNS, KC_BSPC,  KC_DEL
+                                        //|        |    SPC |    TAB |  |        |        |        |
+                                              KC_NO,  KC_SPC,  KC_TAB,    KC_TRNS,   KC_NO,    KC_NO
                                         //`--------------------------'  `--------------------------'
   ),
 
@@ -105,57 +140,128 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|        |        |   Home |      ↑ |   PGUP |    INS |                    |        |        |        |         |        |        |
         KC_NO,   KC_NO,   KC_P7,   KC_P8,   KC_P9,   KC_P0,                        KC_NO, KC_PPLS,   KC_NO,  KC_PAST,   KC_NO,   KC_NO, 
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+---------+--------+--------|
-  //|      { |      } |      4 |      5 |      6 |      : |                    |        |      - |      ↑ |       / |   CTRL |        |
+  //|    ( { |    ) } |      4 |      5 |      6 |      : |                    |        |      - |      ↑ |       / |   CTRL |        |
   //|      [ |      ] |      ← |        |      → |      ; |                    |        |  SHIFT |    CMD | OPT/ALT |   CTRL |        |
-      KC_LBRC, KC_RBRC,   KC_P4,   KC_P5,   KC_P6, KC_COLN,                        KC_NO, SFT_MIN,  GUI_UP,  ALT_DIV, KC_RCTL,   KC_NO, 
+    TD(TD_LP),TD(TD_RP),   KC_P4,   KC_P5,   KC_P6, KC_COLN,                        KC_NO, SFT_MIN,  GUI_UP,  ALT_DIV, KC_RCTL,   KC_NO, 
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+---------+--------+--------|
   //|      < |      > |      1 |      2 |      3 |      = |                    |        |      ← |      ↓ |       → |        |        |
   //|      , |      . |    END |      ↓ |   PGDN |        |                    |        |        |        |         |        |        |
       KC_COMM,  KC_DOT,   KC_P1,   KC_P2,   KC_P3,  KC_EQL,                        KC_NO, KC_LEFT, KC_DOWN,  KC_RGHT,   KC_NO,   KC_NO, 
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+---------+--------+--------|
-                                      //|        |    SPC |    TAB |  |    ENT |        |    DEL |
-                                            TG(3),  KC_SPC,  KC_TAB,     KC_ENT,   KC_NO,  KC_DEL
+                                      //|        |    SPC |    TAB |  |    ENT |   BSPC |    DEL |
+                                            TG(3),  KC_SPC,  KC_TAB,     KC_ENT, KC_BSPC,  KC_DEL
                                       //`--------------------------'  `--------------------------'
   ),
 
   // Symbols
   [4] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-  //|      ! |      @ |      # |      $ |      % |      ^ |                    |      & |      * |      ( |      ) |    - _ |  BSPC  |
-      KC_EXLM,   KC_AT, KC_HASH,  KC_DLR, KC_PERC, KC_CIRC,                      KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_MINS, KC_BSPC,
+  //|      ! |      @ |      # |      $ |      % |      ^ |                    |      & |      * |      ( |      ) |    ' " |  BSPC  |
+      KC_EXLM,   KC_AT, KC_HASH,  KC_DLR, KC_PERC, KC_CIRC,                      KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_QUOT, KC_BSPC,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-  //|        |   CTRL | OPT/ALT|    CMD |  SHIFT |        |                    |        |        |    [ { |    ] } |    = + |   ; :  |
-        KC_NO,  O_CTRL,   O_ALT,   O_GUI,  O_SHFT,   KC_NO,                        KC_NO,   KC_NO, KC_LBRC, KC_RBRC,  KC_EQL, KC_SCLN, 
+  //|        |   CTRL | OPT/ALT|    CMD |  SHIFT |        |                    |        |    = + |      < |     > |     \ | |   ; :  |
+        KC_NO,  O_CTRL,   O_ALT,   O_GUI,  O_SHFT,   KC_NO,                        KC_NO,  KC_EQL,   KC_LT,  KC_GT,  KC_BSLS, KC_SCLN, 
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-  //|        |        |        |        |        |        |                    |        |        |    , < |    . > |    / ? |   \ |  |
-        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                        KC_NO,   KC_NO, KC_COMM,  KC_DOT, KC_SLSH, KC_BSLS, 
+  //|        |        |        |        |        |        |                    |        |        |    , < |    . > |    / ? |        |
+        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                        KC_NO,   KC_NO, KC_COMM,  KC_DOT, KC_SLSH,   KC_NO, 
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                      //|        |    SPC |        |  |    ENT |   BSPC |    DEL |
-                                            KC_NO,  KC_SPC, KC_TRNS,     KC_ENT, KC_BSPC, KC_DEL
+                                      //|        |        |        |  |  ( [ { |  } ] ) |    - _ |
+                                            KC_NO,   KC_NO, KC_TRNS,  TD(TD_LP),TD(TD_RP), KC_MINS
                                       //`--------------------------'  `--------------------------'
   ),
 
   // Nav
   [5] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-  //|        |        |        |        |        |        |                    |        |        |        |        |        |  BSPC  |
-        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, KC_BSPC, 
+  //|        |        |        |        |        |        |                    |        |   PGUP |        |   PGDN |        |  BSPC  |
+        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                        KC_NO, KC_PGUP,   KC_NO, KC_PGDN,   KC_NO, KC_BSPC, 
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-  //|        |   CTRL | OPT/ALT|    CMD |  SHIFT |        |                    |        |   HOME |      ↑ |    END | Wheel↑ |   PGUP |
-        KC_NO,  O_CTRL,   O_ALT,   O_GUI,  O_SHFT,   KC_NO,                        KC_NO, KC_HOME,   KC_UP,  KC_END, KC_WH_U, KC_PGUP, 
+  //|        |   CTRL | OPT/ALT|    CMD |  SHIFT |        |                    |        |   HOME |      ↑ |    END | Wheel↑ |        |
+        KC_NO,  O_CTRL,   O_ALT,   O_GUI,  O_SHFT,   KC_NO,                        KC_NO, KC_HOME,   KC_UP,  KC_END, KC_WH_U,   KC_NO, 
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-  //|        |        |        |        |        |        |                    |        |      ← |      ↓ |      → | Wheel↓ |   PGDN |
-        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                        KC_NO, KC_LEFT, KC_DOWN, KC_RGHT, KC_WH_D, KC_PGDN, 
+  //|        |        |        |        |        |        |                    |        |      ← |      ↓ |      → | Wheel↓ |        |
+        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                        KC_NO, KC_LEFT, KC_DOWN, KC_RGHT, KC_WH_D,   KC_NO, 
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                      //|    ESC |        |    TAB |  | Wheel← | Wheel→ |MouseBtn|
-                                           KC_ESC, KC_TRNS,  KC_TAB,    KC_WH_L, KC_WH_R, KC_BTN1
+                                      //|        |        |        |  | Wheel← |MouseBTN| Wheel→ |
+                                           KC_NO, KC_TRNS,   KC_NO,     KC_WH_L, KC_BTN1, KC_WH_R
                                       //`--------------------------'  `--------------------------'
   )
 };
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  switch (keycode) {
+//=======TAPDANCE FUNCTIONALITY=========
+// Determine the tapdance state to return
+td_state_t cur_dance(tap_dance_state_t *state) {
+    if (state->count == 1) {
+        if (state->interrupted || !state->pressed) return TD_SINGLE_TAP;
+        // Key has not been interrupted, but the key is still held. Means you wanat to send a 'HOLD'
+        else return TD_SINGLE_HOLD;
+    }
+    if (state->count == 2){
+        // TD_DOUBLE_SINGLE_TAP is to distinguish between typing "pepper", and actually wanting a double tap
+        // action when hitting 'pp'. Suggested use case for this return value is when you want to send two
+        // keystrokes of the key, and not the 'double tap' action/macro.
+        if (state->interrupted) return TD_DOUBLE_SINGLE_TAP;
+        else return TD_DOUBLE_TAP;
+    } 
+    else return TD_UNKNOWN; // Any number higher than the maximum state value you return above
+}
 
+// Handle the possible states for each tapdance keycode you define:
+void tdlp_finished(tap_dance_state_t *state, void *user_data) {
+    td_state = cur_dance(state);
+    switch (td_state) {
+        case TD_SINGLE_TAP: register_code16(KC_LPRN); break; // left parens, ()
+        case TD_SINGLE_HOLD: register_code16(KC_LCBR); break; // left curly braces, {}
+        case TD_DOUBLE_TAP: register_code16(KC_LBRC); break; // left brackets, []
+        case TD_DOUBLE_SINGLE_TAP: tap_code16(KC_LPRN); register_code16(KC_LPRN); break; // fast typing, ((
+        default: break;
+    }
+}
+
+void tdlp_reset(tap_dance_state_t *state, void *user_data) {
+    switch (td_state) {
+        case TD_SINGLE_TAP: unregister_code16(KC_LPRN); break; // left parens, ()
+        case TD_SINGLE_HOLD: unregister_code16(KC_LCBR); break; // left curly braces, {}
+        case TD_DOUBLE_TAP: unregister_code16(KC_LBRC); break; // left brackets, []
+        case TD_DOUBLE_SINGLE_TAP: unregister_code16(KC_LPRN); break; // fast typing, ((
+        default: break;
+    }
+    td_state = TD_NONE;
+}
+
+void tdrp_finished(tap_dance_state_t *state, void *user_data) {
+    td_state = cur_dance(state);
+    switch (td_state) {
+        case TD_SINGLE_TAP: register_code16(KC_RPRN); break; // left parens, ()
+        case TD_SINGLE_HOLD: register_code16(KC_RCBR); break; // left curly braces, {}
+        case TD_DOUBLE_TAP: register_code16(KC_RBRC); break; // left brackets, []
+        case TD_DOUBLE_SINGLE_TAP: tap_code16(KC_RPRN); register_code16(KC_RPRN); break; // fast typing, ((
+        default: break;
+    }
+}
+
+void tdrp_reset(tap_dance_state_t *state, void *user_data) {
+    switch (td_state) {
+        case TD_SINGLE_TAP: unregister_code16(KC_RPRN); break; // left parens, ()
+        case TD_SINGLE_HOLD: unregister_code16(KC_RCBR); break; // left curly braces, {}
+        case TD_DOUBLE_TAP: unregister_code16(KC_RBRC); break; // left brackets, []
+        case TD_DOUBLE_SINGLE_TAP: unregister_code16(KC_RPRN); break; // fast typing, ((
+        default: break;
+    }
+    td_state = TD_NONE;
+}
+// Define `ACTION_TAP_DANCE_FN_ADVANCED()` for each tapdance keycode, passing in `finished` and `reset` functions
+tap_dance_action_t tap_dance_actions[] = {
+    [TD_LP] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, tdlp_finished, tdlp_reset),
+    [TD_RP] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, tdrp_finished, tdrp_reset),
+};
+
+
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  uint8_t host_os = detected_host_os();
+  switch (keycode) {
+    // ESC + Grave
     case LT(0, KC_GRV): // add hold functionality to Grave key (ESC)
         if(!record->tap.count && record->event.pressed) {
             tap_code(KC_ESC); // Intercept the hold function to send ESC
@@ -168,16 +274,29 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
         }
         return true;
+    
+    // KOR <-> ENG, and QWERTY <-> Colemak
     case DF(1): // this runs when switching defaults from Colemak layer to QWERTY layer
         if (record->event.pressed) {
-            tap_code(KC_CAPS); // change languages on mac
+            if(host_os == OS_WINDOWS) {
+                tap_code(KC_LNG1); // change languages on windows
+            }
+            else {
+                tap_code(KC_CAPS); // change lanugages on mac
+            }
         }
         break;
     case DF(0): // this runs when switching defaults from QWERTY layer to Colemak layer
         if (record->event.pressed) {
-            tap_code(KC_CAPS); // change languages on mac
+            if(host_os == OS_WINDOWS) {
+                tap_code(KC_LNG1); // change languages on windows
+            }
+            else {
+                tap_code(KC_CAPS); // change lanugages on mac
+            }
         }
         break;
   }
   return true;
 }
+
