@@ -28,8 +28,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #define MASTER_RIGHT
 // #define EE_HANDS
 
-//#define QUICK_TAP_TERM 0
-//#define TAPPING_TERM 100
 
 #ifdef RGBLIGHT_ENABLE
     #define RGBLIGHT_EFFECT_BREATHING
@@ -65,3 +63,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // #define OLED_FONT_H "keyboards/crkbd/lib/glcdfont.c"
 #define OLED_FONT_H "oled/oledfont.c"
+
+// mouse key speed and acceleration
+#define MK_KINETIC_SPEED
+#undef MOUSEKEY_DELAY
+#define MOUSEKEY_DELAY          0
+#undef MOUSEKEY_INTERVAL
+#define MOUSEKEY_INTERVAL       16
+#undef MOUSEKEY_WHEEL_DELAY
+#define MOUSEKEY_WHEEL_DELAY    0
+#undef MOUSEKEY_MAX_SPEED
+#define MOUSEKEY_MAX_SPEED      6
+#undef MOUSEKEY_TIME_TO_MAX
+#define MOUSEKEY_TIME_TO_MAX    64

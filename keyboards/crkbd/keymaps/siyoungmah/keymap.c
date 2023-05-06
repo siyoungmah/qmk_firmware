@@ -102,15 +102,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        CTRL_UP, LCTL_T(KC_A), LALT_T(KC_R), LGUI_T(KC_S), LSFT_T(KC_T),    KC_G,                         KC_M, RSFT_T(KC_N), RGUI_T(KC_E), RALT_T(KC_I), RCTL_T(KC_O), KC_SCLN, 
   //|---------+-------------+-------------+-------------+-------------+--------|                    |--------+-------------+-------------+-------------+-------------+--------| 
   //|  Spot-  |           Z |           X |           C |           D |      V |                    |      K |           H |         , < |         . > |         / ? |   KOR/ |
-  //|   light |             |             |             |             |        |                    |        |             |             |             |             |    ENG |    
-       CMD_SPC,         KC_Z,         KC_X,         KC_C,         KC_D,    KC_V,                         KC_K,         KC_H,      KC_COMM,       KC_DOT,      KC_SLSH,   DF(1),
+  //|   light |        UNDO |         CUT |        COPY |             |  PASTE |                    |        |             |             |             |             |    ENG |    
+       CMD_SPC,   LT(0,KC_Z),   LT(0,KC_X),   LT(0,KC_C),         KC_D, LT(0,KC_V),                      KC_K,         KC_H,      KC_COMM,       KC_DOT,      KC_SLSH,   DF(1),
   //|---------+-------------+-------------+-------------+-------------+---------------`     |----------------+-------------+-------------+-------------+-------------+--------|
-  //                                      |      TOGGLE |       SHIFT |           TAB |     |          ENTER |       SPACE |        BSPC |        
-  //                                      |     NUM/NAV |    CAPSLOCK |       SYMBOLS |     |           FUNC |             |             |        
-                                             TD(TD_LAYR),   TD(TD_CAPS),   LT(4,KC_TAB),          LT(2,KC_ENT),       KC_SPC,      KC_BSPC
+  //                                      |      TOGGLE |        BSPC |         SHIFT |     |          ENTER |       SPACE |         TAB |        
+  //                                      |     NUM/NAV |     SYMBOLS |      CAPSLOCK |     |           FUNC |             |             |        
+                                             TD(TD_LAYR), LT(4,KC_BSPC),    TD(TD_CAPS),          LT(2,KC_ENT),      KC_SPC,      KC_TAB
                                         //`-------------------------------------------'     `--------------------------------------------'
   ),
-  
+
   //base_2, QWERTY for Korean
   [1] = LAYOUT_split_3x6_3(
   //,--------------------------------------------------------------------------.                    ,-------------------------------------------------------------------------.
@@ -120,14 +120,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //| Mission |           A |           S |           D |           F |      G |                    |      H |           J |           K |           L |             |    ; : |
   //| Command |        CTRL |     OPT/ALT |         CMD |       SHIFT |        |                    |        |       SHIFT |         CMD |     OPT/ALT |        CTRL |        | 
        CTRL_UP, LCTL_T(KC_A), LALT_T(KC_S),   LGUI(KC_D), LSFT_T(KC_F),    KC_G,                         KC_H,  RSFT_T(KC_J), RGUI_T(KC_K),RALT_T(KC_L),      KC_RCTL, KC_SCLN,
-  //|---------+-------------+-------------+-------------+-------------+--------|                    |--------+-------------+-------------+-------------+-------------+--------|
-  //|  Spot-  |           Z |           X |           C |           V |      B |                    |      N |           M |         , < |         . > |         / ? |   KOR/ |
-  //|   light |             |             |             |             |        |                    |        |             |             |             |             |    ENG |
-       CMD_SPC,         KC_Z,         KC_X,         KC_C,         KC_V,    KC_B,                         KC_N,         KC_M,      KC_COMM,       KC_DOT,      KC_SLSH,   DF(0),
+  //|---------+-------------+-------------+-------------+-------------+--------|                    |--------+-------------+-------------+-------------+-------------+--------| 
+  //|  Spot-  |           Z |           X |           C |           D |      V |                    |      K |           H |         , < |         . > |         / ? |   KOR/ |
+  //|   light |        UNDO |         CUT |        COPY |             |  PASTE |                    |        |             |             |             |             |    ENG |    
+       CMD_SPC,   LT(1,KC_Z),   LT(1,KC_X),   LT(1,KC_C),         KC_D, LT(1,KC_V),                      KC_K,         KC_H,      KC_COMM,       KC_DOT,      KC_SLSH,   DF(1),
   //|---------+-------------+-------------+-------------+-------------+---------------`     |----------------+-------------+-------------+-------------+-------------+--------|
-  //                                      |      TOGGLE |       SHIFT |           TAB |     |          ENTER |       SPACE |        BSPC |        
-  //                                      |     NUM/NAV |    CAPSLOCK |       SYMBOLS |     |           FUNC |             |             |        
-                                             TD(TD_LAYR),   TD(TD_CAPS),   LT(4,KC_TAB),          LT(2,KC_ENT),       KC_SPC,      KC_BSPC
+  //                                      |      TOGGLE |        BSPC |         SHIFT |     |          ENTER |       SPACE |         TAB |        
+  //                                      |     NUM/NAV |     SYMBOLS |      CAPSLOCK |     |           FUNC |             |             |        
+                                             TD(TD_LAYR), LT(4,KC_BSPC),    TD(TD_CAPS),          LT(2,KC_ENT),      KC_SPC,      KC_TAB
                                         //`-------------------------------------------'     `--------------------------------------------'
   ),
 
@@ -163,8 +163,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|      , |      . |    END |      ↓ |   PGDN |        |                    |        |        |        |         |        |        |
       KC_COMM,  KC_DOT,   KC_P1,   KC_P2,   KC_P3,  KC_EQL,                        KC_NO, KC_LEFT, KC_DOWN,  KC_RGHT,   KC_NO,   KC_NO, 
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+---------+--------+--------|
-                                      //|        |  SHIFT |    TAB |  |    ENT |    SPC |    BSPC |
-                                            TG(3), KC_LSFT,  KC_TAB,     KC_ENT,  KC_SPC,  KC_BSPC
+                                      //|        |   BSPC |  SHIFT |  |    ENT |    SPC |    TAB |
+                                            TG(3), KC_BSPC, KC_LSFT,     KC_ENT,  KC_SPC,  KC_TAB
                                       //`--------------------------'  `--------------------------'
   ),
 
@@ -181,24 +181,24 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                        KC_NO,   KC_NO, KC_COMM,  KC_DOT, KC_SLSH,   KC_NO, 
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                       //|        |        |        |  |  ( [ { |  } ] ) |    - _ |
-                                            KC_NO,   KC_NO, KC_TRNS,  TD(TD_LP),TD(TD_RP), KC_MINS
+                                            KC_NO, KC_TRNS,   KC_NO,  TD(TD_LP),TD(TD_RP), KC_MINS
                                       //`--------------------------'  `--------------------------'
   ),
 
   // Nav
   [5] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-  //| M SPD 2|        | M WH ↑ |    M ↑ | M WH ↓ |        |                    |        |   HOME |      ↑ |    END |   PGUP |        |
-      KC_ACL2,   KC_NO, KC_WH_U, KC_MS_U, KC_WH_D,   KC_NO,                        KC_NO, KC_HOME,   KC_UP,  KC_END, KC_PGUP,   KC_NO, 
+  //|        |        | M WH ↑ |    M ↑ | M WH ↓ |        |                    |        |   HOME |      ↑ |    END |   PGUP |        |
+        KC_NO,   KC_NO, KC_WH_U, KC_MS_U, KC_WH_D,   KC_NO,                        KC_NO, KC_HOME,   KC_UP,  KC_END, KC_PGUP,   KC_NO, 
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-  //| M SPD 1| M WH ← |    M ← |    M ↓ |    M → | M WH → |                    |        |      ← |      ↓ |      → |   PGDN |        |
-      KC_ACL1, KC_WH_L, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_R,                        KC_NO, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN,   KC_NO, 
+  //|        | M WH ← |    M ← |    M ↓ |    M → | M WH → |                    |        |      ← |      ↓ |      → |   PGDN |        |
+       KC_NO , KC_WH_L, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_R,                        KC_NO, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN,   KC_NO, 
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-  //| M SPD 0|        |        |        |        |        |                    |        |        |        |        |        |        |
-      KC_ACL0,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, 
+  //|        |        |        |        |        |        |                    |        |        |        |        |        |        |
+        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, 
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                      //|        |SHFT TOG|     ALT|  | M BTN R| M BTN L| M BTN M|
-                                            TG(5),SHFT_TOG, KC_LALT,    KC_BTN2, KC_BTN1, KC_BTN3
+                                      //|        |    ALT |SHFT TOG|  | M BTN R| M BTN L| M BTN M|
+                                            TG(5), KC_LALT,SHFT_TOG,    KC_BTN2, KC_BTN1, KC_BTN3
                                       //`--------------------------'  `--------------------------'
   )
 };
@@ -377,12 +377,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     // ESC + Grave
     case LT(0, KC_GRV): // add hold functionality to Grave key (ESC)
-        if(!record->tap.count && record->event.pressed) {
-            tap_code(KC_ESC); // Intercept the hold function to send ESC
-            return false;
-        }
-        return true;
-    case LT(1, KC_GRV): // add hold functionality to Grave key (ESC)
+    case LT(1, KC_GRV):
         if(!record->tap.count && record->event.pressed) {
             tap_code(KC_ESC); // Intercept the hold function to send ESC
             return false;
@@ -405,16 +400,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     
     // KOR <-> ENG, and QWERTY <-> Colemak
     case DF(1): // this runs when switching defaults from Colemak layer to QWERTY layer
-        if (record->event.pressed) {
-            if(host_os == OS_WINDOWS) {
-                tap_code(KC_LNG1); // change languages on windows
-            }
-            else {
-                tap_code(KC_CAPS); // change lanugages on mac
-            }
-        }
-        break;
-
     case DF(0): // this runs when switching defaults from QWERTY layer to Colemak layer
         if (record->event.pressed) {
             if(host_os == OS_WINDOWS) {
@@ -425,6 +410,36 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
         }
         break;
+    
+    // Common shortcuts on HOLD (Cut, Copy, Paste, Undo)
+    case LT(0,KC_X):
+    case LT(1,KC_X):
+        if (!record->tap.count && record->event.pressed) {
+            tap_code16(G(KC_X)); // Intercept hold function to send Ctrl-X
+            return false;
+        }
+        return true;             // Return true for normal processing of tap keycode
+    case LT(0,KC_C):
+    case LT(1,KC_C):
+        if (!record->tap.count && record->event.pressed) {
+            tap_code16(G(KC_C)); // Intercept hold function to send Ctrl-C
+            return false;
+        }
+        return true;             // Return true for normal processing of tap keycode
+    case LT(0,KC_V):
+    case LT(1,KC_V):
+        if (!record->tap.count && record->event.pressed) {
+            tap_code16(G(KC_V)); // Intercept hold function to send Ctrl-V
+            return false;
+        }
+        return true;             // Return true for normal processing of tap keycode
+    case LT(0,KC_Z):
+    case LT(1,KC_Z):
+        if (!record->tap.count && record->event.pressed) {
+            tap_code16(G(KC_Z)); // Intercept hold function to send Ctrl-Z
+            return false;
+        }
+        return true;             // Return true for normal processing of tap keycode
   }
   return true;
 }
