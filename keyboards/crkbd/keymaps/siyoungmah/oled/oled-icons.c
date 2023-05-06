@@ -34,10 +34,9 @@ static void render_logo(void) {
 
 #define L_COLEMAK 0
 #define L_QWERTY 1
-#define L_FUNC 2
-#define L_NUM 3
-#define L_SYMBOLS 4
-#define L_NAV 5
+#define L_NUM_FN 2
+#define L_SYMBOLS 3
+#define L_NAV 4
 
 void oled_render_layer_state(void) {
     oled_write_P(PSTR("Layer"), false);
@@ -48,14 +47,11 @@ void oled_render_layer_state(void) {
         case L_QWERTY:
             oled_write_ln_P(PSTR("QWERTY"), false);
             break;
-        case L_FUNC:
-            oled_write_ln_P(PSTR("FN\n"), false);
-            break;
-        case L_NUM:
-            oled_write_ln_P(PSTR("12345"), false);
+        case L_NUM_FN:
+            oled_write_ln_P(PSTR("Numbers"), false);
             break;
         case L_SYMBOLS:
-            oled_write_ln_P(PSTR("!@#$%%\n"), false);
+            oled_write_ln_P(PSTR("Symbols\n"), false);
             break;
         case L_NAV:
             oled_write_ln_P(PSTR("NAV\n"), false);
