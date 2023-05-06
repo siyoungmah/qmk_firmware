@@ -40,12 +40,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define ESC_GRV0 LT(0, KC_GRV)
 #define ESC_GRV1 LT(1, KC_GRV)
 
+// custom keycodes for Macros
+enum custom_keycodes {
+    SHFT_TOG = SAFE_RANGE,
+};
+
 // =======Tap Dancing=======
 
 // Tap Dance keycodes
 enum td_keycodes {
     TD_LP, // single tap (, double tap [, hold {
     TD_RP, // single tap ), double tap ], hold }};
+    TD_CAPS, // single tap shift, hold shift, double tap CAPS LOCK
+    TD_LAYR, // toggle layers (NUM and NAV)
+    TD_AS, // Alt, but Alt + Shift when douple tap hold
 };
 
 // Define a type containing as many tapdance states as you need
@@ -55,6 +63,7 @@ typedef enum {
     TD_SINGLE_TAP,
     TD_SINGLE_HOLD,
     TD_DOUBLE_TAP,
+    TD_DOUBLE_HOLD,
     TD_DOUBLE_SINGLE_TAP // send two single taps
 } td_state_t;
 
@@ -71,6 +80,12 @@ void tdlp_finished(tap_dance_state_t *state, void *user_data);
 void tdlp_reset(tap_dance_state_t *state, void *user_data);
 void tdrp_finished(tap_dance_state_t *state, void *user_data);
 void tdrp_reset(tap_dance_state_t *state, void *user_data);
+void tdcaps_finished(tap_dance_state_t *state, void *user_data);
+void tdcaps_reset(tap_dance_state_t *state, void *user_data);
+void tdlayr_finished(tap_dance_state_t *state, void *user_data);
+void tdlayr_reset(tap_dance_state_t *state, void *user_data);
+// void tdas_finished(tap_dance_state_t *state, void *user_data);
+// void tdas_reset(tap_dance_state_t *state, void *user_data);
 
 
 //=======LAYOUT==========
@@ -79,8 +94,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // base, Colemak_DH
   [0] = LAYOUT_split_3x6_3(
   //,--------------------------------------------------------------------------.                    ,-------------------------------------------------------------------------.
-  //|     ` ~ |           Q |           W |           F |           P |      B |                    |      J |           L |           U |           Y |         ' " |   BSPC |
-      ESC_GRV0,         KC_Q,         KC_W,         KC_F,         KC_P,    KC_B,                         KC_J,         KC_L,         KC_U,         KC_Y,      KC_QUOT, KC_BSPC,       
+  //|     ` ~ |           Q |           W |           F |           P |      B |                    |      J |           L |           U |           Y |         ' " |    DEL |
+      ESC_GRV0,         KC_Q,         KC_W,         KC_F,         KC_P,    KC_B,                         KC_J,         KC_L,         KC_U,         KC_Y,      KC_QUOT,  KC_DEL,       
   //|---------+-------------+-------------+-------------+-------------+--------|                    |--------+-------------+-------------+-------------+-------------+--------| 
   //| Mission |           A |           R |           S |           T |      G |                    |      M |           N |           E |           I |           O |    ; : |
   //| Command |        CTRL |     OPT/ALT |         CMD |       SHIFT |        |                    |        |       SHIFT |         CMD |     OPT/ALT |        CTRL |        | 
@@ -90,17 +105,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|   light |             |             |             |             |        |                    |        |             |             |             |             |    ENG |    
        CMD_SPC,         KC_Z,         KC_X,         KC_C,         KC_D,    KC_V,                         KC_K,         KC_H,      KC_COMM,       KC_DOT,      KC_SLSH,   DF(1),
   //|---------+-------------+-------------+-------------+-------------+---------------`     |----------------+-------------+-------------+-------------+-------------+--------|
-  //                                      |             |       SPACE |           TAB |     |          ENTER |        BSPC |         DEL |        
-  //                                      |         NUM |         NAV |       SYMBOLS |     |           FUNC |             |             |        
-                                                  TG(3), LT(5,KC_SPC),   LT(4,KC_TAB),          LT(2,KC_ENT),       KC_BSPC,       KC_DEL
+  //                                      |      TOGGLE |       SHIFT |           TAB |     |          ENTER |       SPACE |        BSPC |        
+  //                                      |     NUM/NAV |    CAPSLOCK |       SYMBOLS |     |           FUNC |             |             |        
+                                             TD(TD_LAYR),   TD(TD_CAPS),   LT(4,KC_TAB),          LT(2,KC_ENT),       KC_SPC,      KC_BSPC
                                         //`-------------------------------------------'     `--------------------------------------------'
   ),
   
   //base_2, QWERTY for Korean
   [1] = LAYOUT_split_3x6_3(
   //,--------------------------------------------------------------------------.                    ,-------------------------------------------------------------------------.
-  //|     ` ~ |           Q |           W |           E |           R |      T |                    |      Y |           U |           I |           O |         ' " |   BSPC |
-      ESC_GRV1,         KC_Q,         KC_W,         KC_E,         KC_R,    KC_T,                         KC_Y,         KC_U,         KC_I,         KC_O,      KC_QUOT, KC_BSPC,
+  //|     ` ~ |           Q |           W |           E |           R |      T |                    |      Y |           U |           I |           O |         ' " |    DEL |
+      ESC_GRV1,         KC_Q,         KC_W,         KC_E,         KC_R,    KC_T,                         KC_Y,         KC_U,         KC_I,         KC_O,      KC_QUOT, KC_DEL,
   //|---------+-------------+-------------+-------------+-------------+--------|                    |--------+-------------+-------------+-------------+-------------+--------|
   //| Mission |           A |           S |           D |           F |      G |                    |      H |           J |           K |           L |             |    ; : |
   //| Command |        CTRL |     OPT/ALT |         CMD |       SHIFT |        |                    |        |       SHIFT |         CMD |     OPT/ALT |        CTRL |        | 
@@ -109,10 +124,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|  Spot-  |           Z |           X |           C |           V |      B |                    |      N |           M |         , < |         . > |         / ? |   KOR/ |
   //|   light |             |             |             |             |        |                    |        |             |             |             |             |    ENG |
        CMD_SPC,         KC_Z,         KC_X,         KC_C,         KC_V,    KC_B,                         KC_N,         KC_M,      KC_COMM,       KC_DOT,      KC_SLSH,   DF(0),
-  //|---------+-------------+-------------+-------------+-------------+--------|                    |--------+-------------+-------------+-------------+-------------+--------|                                         KC_LGUI,   MO(1),  KC_SPC,     KC_ENT,   MO(2), KC_RALT
-                                        //|             |       SPACE |           TAB |     |          ENTER |        BSPC |         DEL |        
-  //                                      |         NUM |         NAV |       SYMBOLS |     |           FUNC |             |             |        
-                                                   TG(3), LT(5,KC_SPC),   LT(4,KC_TAB),          LT(2,KC_ENT),      KC_BSPC,       KC_DEL
+  //|---------+-------------+-------------+-------------+-------------+---------------`     |----------------+-------------+-------------+-------------+-------------+--------|
+  //                                      |      TOGGLE |       SHIFT |           TAB |     |          ENTER |       SPACE |        BSPC |        
+  //                                      |     NUM/NAV |    CAPSLOCK |       SYMBOLS |     |           FUNC |             |             |        
+                                             TD(TD_LAYR),   TD(TD_CAPS),   LT(4,KC_TAB),          LT(2,KC_ENT),       KC_SPC,      KC_BSPC
                                         //`-------------------------------------------'     `--------------------------------------------'
   ),
 
@@ -128,17 +143,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //| CMD/CTRL |    F10 |     F1 |     F2 |     F3 |        |                    |        |        |        |         |        |        |
         CG_NORM,  KC_F10,   KC_F1,   KC_F2,   KC_F3,   KC_NO,                        KC_NO,   KC_NO,   KC_NO,    KC_NO,   KC_NO,   KC_NO, 
   //|----------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+---------+--------+--------|
-                                        //|        |    SPC |    TAB |  |        |        |        |
-                                              KC_NO,  KC_SPC,  KC_TAB,    KC_TRNS,   KC_NO,    KC_NO
+                                        //|        |        |        |  |        |        |        |
+                                              KC_NO,   KC_NO,   KC_NO,    KC_TRNS,   KC_NO,    KC_NO
                                         //`--------------------------'  `--------------------------'
   ),
 
   // NUM
   [3] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,------------------------------------------------------.
-  //|        |        |      7 |      8 |      9 |      0 |                    |        |      + |        |       * |        |        |
+  //|        |        |      7 |      8 |      9 |      0 |                    |        |      + |        |       * |        |    DEL |
   //|        |        |   Home |      ↑ |   PGUP |    INS |                    |        |        |        |         |        |        |
-        KC_NO,   KC_NO,   KC_P7,   KC_P8,   KC_P9,   KC_P0,                        KC_NO, KC_PPLS,   KC_NO,  KC_PAST,   KC_NO,   KC_NO, 
+        KC_NO,   KC_NO,   KC_P7,   KC_P8,   KC_P9,   KC_P0,                        KC_NO, KC_PPLS,   KC_NO,  KC_PAST,   KC_NO,  KC_DEL, 
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+---------+--------+--------|
   //|    ( { |    ) } |      4 |      5 |      6 |      : |                    |        |      - |      ↑ |       / |   CTRL |        |
   //|      [ |      ] |      ← |        |      → |      ; |                    |        |  SHIFT |    CMD | OPT/ALT |   CTRL |        |
@@ -148,8 +163,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|      , |      . |    END |      ↓ |   PGDN |        |                    |        |        |        |         |        |        |
       KC_COMM,  KC_DOT,   KC_P1,   KC_P2,   KC_P3,  KC_EQL,                        KC_NO, KC_LEFT, KC_DOWN,  KC_RGHT,   KC_NO,   KC_NO, 
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+---------+--------+--------|
-                                      //|        |    SPC |    TAB |  |    ENT |   BSPC |    DEL |
-                                            TG(3),  KC_SPC,  KC_TAB,     KC_ENT, KC_BSPC,  KC_DEL
+                                      //|        |  SHIFT |    TAB |  |    ENT |    SPC |    BSPC |
+                                            TG(3), KC_LSFT,  KC_TAB,     KC_ENT,  KC_SPC,  KC_BSPC
                                       //`--------------------------'  `--------------------------'
   ),
 
@@ -173,23 +188,24 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // Nav
   [5] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-  //|        |        |        |        |        |        |                    |        |   PGUP |        |   PGDN |        |  BSPC  |
-        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                        KC_NO, KC_PGUP,   KC_NO, KC_PGDN,   KC_NO, KC_BSPC, 
+  //| M SPD 2|        | M WH ↑ |    M ↑ | M WH ↓ |        |                    |        |   HOME |      ↑ |    END |   PGUP |        |
+      KC_ACL2,   KC_NO, KC_WH_U, KC_MS_U, KC_WH_D,   KC_NO,                        KC_NO, KC_HOME,   KC_UP,  KC_END, KC_PGUP,   KC_NO, 
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-  //|        |   CTRL | OPT/ALT|    CMD |  SHIFT |        |                    |        |   HOME |      ↑ |    END | Wheel↑ |        |
-        KC_NO,  O_CTRL,   O_ALT,   O_GUI,  O_SHFT,   KC_NO,                        KC_NO, KC_HOME,   KC_UP,  KC_END, KC_WH_U,   KC_NO, 
+  //| M SPD 1| M WH ← |    M ← |    M ↓ |    M → | M WH → |                    |        |      ← |      ↓ |      → |   PGDN |        |
+      KC_ACL1, KC_WH_L, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_R,                        KC_NO, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN,   KC_NO, 
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-  //|        |        |        |        |        |        |                    |        |      ← |      ↓ |      → | Wheel↓ |        |
-        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                        KC_NO, KC_LEFT, KC_DOWN, KC_RGHT, KC_WH_D,   KC_NO, 
+  //| M SPD 0|        |        |        |        |        |                    |        |        |        |        |        |        |
+      KC_ACL0,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, 
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                      //|        |        |        |  | Wheel← |MouseBTN| Wheel→ |
-                                           KC_NO, KC_TRNS,   KC_NO,     KC_WH_L, KC_BTN1, KC_WH_R
+                                      //|        |SHFT TOG|     ALT|  | M BTN R| M BTN L| M BTN M|
+                                            TG(5),SHFT_TOG, KC_LALT,    KC_BTN2, KC_BTN1, KC_BTN3
                                       //`--------------------------'  `--------------------------'
   )
 };
 
 //=======TAPDANCE FUNCTIONALITY=========
 // Determine the tapdance state to return
+
 td_state_t cur_dance(tap_dance_state_t *state) {
     if (state->count == 1) {
         if (state->interrupted || !state->pressed) return TD_SINGLE_TAP;
@@ -201,6 +217,7 @@ td_state_t cur_dance(tap_dance_state_t *state) {
         // action when hitting 'pp'. Suggested use case for this return value is when you want to send two
         // keystrokes of the key, and not the 'double tap' action/macro.
         if (state->interrupted) return TD_DOUBLE_SINGLE_TAP;
+        else if (state->pressed) return TD_DOUBLE_HOLD;
         else return TD_DOUBLE_TAP;
     } 
     else return TD_UNKNOWN; // Any number higher than the maximum state value you return above
@@ -250,11 +267,108 @@ void tdrp_reset(tap_dance_state_t *state, void *user_data) {
     }
     td_state = TD_NONE;
 }
+
+void tdcaps_finished(tap_dance_state_t *state, void *user_data) {
+    td_state = cur_dance(state);
+    switch (td_state) {
+        case TD_SINGLE_TAP: register_code16(KC_LSFT); break; // shift
+        case TD_SINGLE_HOLD: register_code16(KC_LSFT); break; // shift
+        case TD_DOUBLE_TAP: register_code16(KC_CAPS); break; // Caps Lock
+        case TD_DOUBLE_SINGLE_TAP: tap_code16(KC_LSFT); register_code16(KC_LSFT); break; // fast typing
+        default: break;
+    }
+}
+
+void tdcaps_reset(tap_dance_state_t *state, void *user_data) {
+    switch (td_state) {
+        case TD_SINGLE_TAP: unregister_code16(KC_LSFT); break; // shift
+        case TD_SINGLE_HOLD: unregister_code16(KC_LSFT); break; // shift
+        case TD_DOUBLE_TAP: unregister_code16(KC_CAPS); break; // Caps Lock
+        case TD_DOUBLE_SINGLE_TAP: unregister_code16(KC_LSFT); break; // fast typing
+        default: break;
+    }
+    td_state = TD_NONE;
+}
+
+void tdlayr_finished(tap_dance_state_t *state, void *user_data) {
+    td_state = cur_dance(state);
+    switch (td_state) {
+        case TD_SINGLE_TAP: 
+            // Check to see if the NUM layer is already set
+            if(layer_state_is(3)){
+                layer_off(3);
+            } else {
+                layer_on(3);
+            }
+            break;
+        case TD_DOUBLE_TAP:
+            // Check to see if the NAV layer is already set
+            if(layer_state_is(5)){
+                layer_off(5);
+            } else {
+                layer_on(5);
+            }
+        default: break;
+    }
+}
+
+void tdlayr_reset(tap_dance_state_t *state, void *user_data) {
+    td_state = TD_NONE;
+}
+
+// void tdas_finished(tap_dance_state_t *state, void *user_data) {
+//     td_state = cur_dance(state);
+//     switch (td_state) {
+//         case TD_SINGLE_TAP: register_code(KC_LALT); break; // alt
+//         case TD_SINGLE_HOLD: register_code(KC_LALT); break; // alt
+//         case TD_DOUBLE_TAP: 
+//             register_code(KC_LALT);
+//             register_code(KC_LSFT);
+//             break; // ALT + SHIFT
+//         case TD_DOUBLE_HOLD: 
+//             register_code(KC_LALT);
+//             register_code(KC_LSFT);
+//             break; // ALT + SHIFT
+//         default: break;
+//     }
+// }
+
+// void tdas_reset(tap_dance_state_t *state, void *user_data) {
+//     switch (td_state) {
+//         case TD_SINGLE_TAP: unregister_code(KC_LALT); break; // alt
+//         case TD_SINGLE_HOLD: unregister_code(KC_LALT); break; // alt
+//         case TD_DOUBLE_TAP: 
+//             unregister_code(KC_LALT);
+//             unregister_code(KC_LSFT);
+//             break; // ALT + SHIFT
+//         case TD_DOUBLE_HOLD: 
+//             unregister_code(KC_LALT);
+//             unregister_code(KC_LSFT);
+//             break; // ALT + SHIFT
+//         default: break;
+//     }
+//     td_state = TD_NONE;
+// }
+
+
 // Define `ACTION_TAP_DANCE_FN_ADVANCED()` for each tapdance keycode, passing in `finished` and `reset` functions
 tap_dance_action_t tap_dance_actions[] = {
     [TD_LP] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, tdlp_finished, tdlp_reset),
     [TD_RP] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, tdrp_finished, tdrp_reset),
+    [TD_CAPS] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, tdcaps_finished, tdcaps_reset),
+    [TD_LAYR] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, tdlayr_finished, tdlayr_reset),
+    // [TD_AS] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, tdas_finished, tdas_reset),
 };
+
+// Set a long-ish tapping term for tap-dance keys
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record){
+    switch(keycode) {
+        case TD(TD_CAPS): return 275;
+        case TD(TD_LAYR): return 275;
+        case TD(TD_AS): return 275;
+        default: return TAPPING_TERM;
+    }
+}
 
 
 
@@ -274,6 +388,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
         }
         return true;
+
+    // Toggle Shift On/Off
+    case SHFT_TOG:
+        if(record->event.pressed) { // when SHFT_TOG is pressed
+            static bool held = false; // Static variable to remember state.
+            held = !held; // toggle between holding and releasing
+            if(held) {
+                register_code(KC_LSFT);
+            } else {
+                unregister_code(KC_LSFT);
+            }
+            return false;
+        }
+        break;
     
     // KOR <-> ENG, and QWERTY <-> Colemak
     case DF(1): // this runs when switching defaults from Colemak layer to QWERTY layer
@@ -286,6 +414,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
         }
         break;
+
     case DF(0): // this runs when switching defaults from QWERTY layer to Colemak layer
         if (record->event.pressed) {
             if(host_os == OS_WINDOWS) {

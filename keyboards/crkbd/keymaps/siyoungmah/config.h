@@ -57,6 +57,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #undef PERMISSIVE_HOLD
 #define STRICT_LAYER_RELEASE
 #define TAPPING_TERM 200
+#define TAPPING_TERM_PER_KEY
 
 #define SPLIT_MODS_ENABLE
 #define SPLIT_LED_STATE_ENABLE
