@@ -105,9 +105,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|   light |        UNDO |         CUT |        COPY |             |  PASTE |                    |        |             |             |             |             |    ENG |    
        CMD_SPC,   LT(0,KC_Z),   LT(0,KC_X),   LT(0,KC_C),         KC_D, LT(0,KC_V),                      KC_K,         KC_H,      KC_COMM,       KC_DOT,      KC_SLSH,   DF(1),
   //|---------+-------------+-------------+-------------+-------------+---------------`     |----------------+-------------+-------------+-------------+-------------+--------|
-  //                                      |      TOGGLE |        BSPC |         SHIFT |     |          ENTER |       SPACE |         TAB |        
-  //                                      |     NUM/NAV |     SYMBOLS |      CAPSLOCK |     |           FUNC |             |             |        
-                                             TD(TD_LAYR), LT(4,KC_BSPC),    TD(TD_CAPS),          LT(2,KC_ENT),      KC_SPC,      KC_TAB
+  //                                      |         TAB |       SPACE |         SHIFT |     |          ENTER |   BACKSPACE |      TOGGLE |        
+  //                                      |         NAV |     SYMBOLS |      CAPSLOCK |     |           FUNC |             |     NUM/NAV |        
+                                            LT(5,KC_TAB),  LT(4,KC_SPC),    TD(TD_CAPS),          LT(2,KC_ENT),     KC_BSPC,   TD(TD_LAYR)
                                         //`-------------------------------------------'     `--------------------------------------------'
   ),
 
@@ -125,9 +125,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|   light |        UNDO |         CUT |        COPY |             |  PASTE |                    |        |             |             |             |             |    ENG |    
        CMD_SPC,   LT(1,KC_Z),   LT(1,KC_X),   LT(1,KC_C),         KC_D, LT(1,KC_V),                      KC_K,         KC_H,      KC_COMM,       KC_DOT,      KC_SLSH,   DF(1),
   //|---------+-------------+-------------+-------------+-------------+---------------`     |----------------+-------------+-------------+-------------+-------------+--------|
-  //                                      |      TOGGLE |        BSPC |         SHIFT |     |          ENTER |       SPACE |         TAB |        
-  //                                      |     NUM/NAV |     SYMBOLS |      CAPSLOCK |     |           FUNC |             |             |        
-                                             TD(TD_LAYR), LT(4,KC_BSPC),    TD(TD_CAPS),          LT(2,KC_ENT),      KC_SPC,      KC_TAB
+  //                                      |         TAB |       SPACE |         SHIFT |     |          ENTER |   BACKSPACE |      TOGGLE |        
+  //                                      |         NAV |     SYMBOLS |      CAPSLOCK |     |           FUNC |             |     NUM/NAV |        
+                                            LT(5,KC_TAB),  LT(4,KC_SPC),    TD(TD_CAPS),          LT(2,KC_ENT),     KC_BSPC,   TD(TD_LAYR)
                                         //`-------------------------------------------'     `--------------------------------------------'
   ),
 
@@ -163,8 +163,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|      , |      . |    END |      ↓ |   PGDN |        |                    |        |        |        |         |        |        |
       KC_COMM,  KC_DOT,   KC_P1,   KC_P2,   KC_P3,  KC_EQL,                        KC_NO, KC_LEFT, KC_DOWN,  KC_RGHT,   KC_NO,   KC_NO, 
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+---------+--------+--------|
-                                      //|        |   BSPC |  SHIFT |  |    ENT |    SPC |    TAB |
-                                            TG(3), KC_BSPC, KC_LSFT,     KC_ENT,  KC_SPC,  KC_TAB
+                                      //|    TAB |    SPC |  SHIFT |  |    ENT |   BSPC |   BASE |
+                                           KC_TAB,  KC_SPC, KC_LSFT,     KC_ENT, KC_BSPC,   TG(3)
                                       //`--------------------------'  `--------------------------'
   ),
 
@@ -197,8 +197,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|        |        |        |        |        |        |                    |        |        |        |        |        |        |
         KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, 
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                      //|        |    ALT |SHFT TOG|  | M BTN R| M BTN L| M BTN M|
-                                            TG(5), KC_LALT,SHFT_TOG,    KC_BTN2, KC_BTN1, KC_BTN3
+                                      //|        |    ALT |SHFT TOG|  | M BTN R| M BTN L|   BASE |
+                                          KC_TRNS, KC_LALT,SHFT_TOG,    KC_BTN2, KC_BTN1,   TG(5)
                                       //`--------------------------'  `--------------------------'
   )
 };
@@ -273,7 +273,7 @@ void tdcaps_finished(tap_dance_state_t *state, void *user_data) {
     switch (td_state) {
         case TD_SINGLE_TAP: register_code16(KC_LSFT); break; // shift
         case TD_SINGLE_HOLD: register_code16(KC_LSFT); break; // shift
-        case TD_DOUBLE_TAP: register_code16(KC_CAPS); break; // Caps Lock
+        case TD_DOUBLE_TAP: caps_word_toggle(); break; // Caps Lock
         case TD_DOUBLE_SINGLE_TAP: tap_code16(KC_LSFT); register_code16(KC_LSFT); break; // fast typing
         default: break;
     }
@@ -283,7 +283,7 @@ void tdcaps_reset(tap_dance_state_t *state, void *user_data) {
     switch (td_state) {
         case TD_SINGLE_TAP: unregister_code16(KC_LSFT); break; // shift
         case TD_SINGLE_HOLD: unregister_code16(KC_LSFT); break; // shift
-        case TD_DOUBLE_TAP: unregister_code16(KC_CAPS); break; // Caps Lock
+        case TD_DOUBLE_TAP: break; // Caps Lock
         case TD_DOUBLE_SINGLE_TAP: unregister_code16(KC_LSFT); break; // fast typing
         default: break;
     }
