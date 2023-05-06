@@ -48,13 +48,13 @@ void oled_render_layer_state(void) {
             oled_write_ln_P(PSTR("QWERTY"), false);
             break;
         case L_NUM_FN:
-            oled_write_ln_P(PSTR("Numbers"), false);
+            oled_write_ln_P(PSTR("12345\n"), false);
             break;
         case L_SYMBOLS:
-            oled_write_ln_P(PSTR("Symbols\n"), false);
+            oled_write_ln_P(PSTR("!@#$%\n"), false);
             break;
         case L_NAV:
-            oled_write_ln_P(PSTR("NAV\n"), false);
+            oled_write_ln_P(PSTR("Nav\n"), false);
             break;  
         default:
             oled_write_ln_P(PSTR("Undefined"), false);
