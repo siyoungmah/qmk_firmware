@@ -287,7 +287,7 @@ void td_sticky_shift_finished(tap_dance_state_t *state, void *user_data) {
 
 void td_sticky_shift_reset(tap_dance_state_t *state, void *user_data) {
     switch (td_state) {
-        case TD_SINGLE_TAP: clear_oneshot_mods(); unregister_code16(KC_LSFT); break; // shift
+        case TD_SINGLE_TAP: break; // one shot shift still active
         case TD_SINGLE_HOLD: unregister_code16(KC_LSFT); break; // shift
         case TD_DOUBLE_TAP: break; // Caps Lock
         default: break;
@@ -381,6 +381,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   uint8_t host_os = detected_host_os();
 
   if (!process_custom_shift_keys(keycode, record)) { return false; }
+
+  if(!record->event.pressed) {
+    if(keyboard_report->mods & MOD_BIT(KC_LSFT)){
+        // remove left SHIFT keys one shot, works with TD_SHFT tap dance
+        unregister_mods(MOD_BIT(KC_LSFT));
+    }
+  }
 
   switch (keycode) {
     // ESC + Grave
