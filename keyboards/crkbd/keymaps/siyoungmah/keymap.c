@@ -271,9 +271,9 @@ void td_sticky_shift_finished(tap_dance_state_t *state, void *user_data) {
     td_state = cur_dance(state);
     static bool held = false; // static variable to remember state.
     switch (td_state) {
-        case TD_SINGLE_TAP: register_code16(KC_LSFT); break; // shift
-        case TD_SINGLE_HOLD: register_code16(KC_LSFT); break; // shift
-        case TD_DOUBLE_TAP: 
+        case TD_SINGLE_TAP: set_oneshot_mods(MOD_BIT(KC_LSFT)); break; // tap for oneshot shift
+        case TD_SINGLE_HOLD: register_code16(KC_LSFT); break; // hold for normal shift
+        case TD_DOUBLE_TAP: // double tap for toggle shift
             held = !held; // toggle between held and release
             if(held) {
                 register_code(KC_LSFT);
@@ -287,7 +287,7 @@ void td_sticky_shift_finished(tap_dance_state_t *state, void *user_data) {
 
 void td_sticky_shift_reset(tap_dance_state_t *state, void *user_data) {
     switch (td_state) {
-        case TD_SINGLE_TAP: unregister_code16(KC_LSFT); break; // shift
+        case TD_SINGLE_TAP: clear_oneshot_mods(); unregister_code16(KC_LSFT); break; // shift
         case TD_SINGLE_HOLD: unregister_code16(KC_LSFT); break; // shift
         case TD_DOUBLE_TAP: break; // Caps Lock
         default: break;
