@@ -68,7 +68,8 @@ enum td_keycodes {
     TD_RP, // single tap ), double tap ], hold }};
     TD_SHFT, // single tap shift, hold shift, double tap CAPS LOCK
     TD_LAYR, // toggle layers (NUM and NAV)
-    // TD_AS, // Alt, but Alt + Shift when douple tap hold
+    TD_M1, // tap for Mouse BTN1, hold for CMD
+    TD_M2, // tap for Mouse BTN2, hold for CTRL
 };
 
 // Define a type containing as many tapdance states as you need
@@ -99,8 +100,10 @@ void td_sticky_shift_finished(tap_dance_state_t *state, void *user_data);
 void td_sticky_shift_reset(tap_dance_state_t *state, void *user_data);
 void tdlayr_finished(tap_dance_state_t *state, void *user_data);
 void tdlayr_reset(tap_dance_state_t *state, void *user_data);
-// void tdas_finished(tap_dance_state_t *state, void *user_data);
-// void tdas_reset(tap_dance_state_t *state, void *user_data);
+void tdm1_finished(tap_dance_state_t *state, void *user_data);
+void tdm1_finished(tap_dance_state_t *state, void *user_data);
+void tdm2_reset(tap_dance_state_t *state, void *user_data);
+void tdm2_reset(tap_dance_state_t *state, void *user_data);
 
 
 //=======LAYOUT==========
@@ -193,11 +196,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|        | M WH ← |    M ← |    M ↓ |    M → | M WH → |                    |        |      ← |      ↓ |      → |   PGDN |        |
        KC_NO , KC_WH_L, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_R,                        KC_NO, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN,   KC_NO, 
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-  //|        |        |        |        | M BTN L| M BTN R|                    |        |        |        |        |        |        |
-        KC_NO,   KC_NO,   KC_NO,   KC_NO, KC_BTN1, KC_BTN2,                        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, 
+  //|        |        |        |        |        |        |                    |        |        |        |        |        |        |
+        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, 
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                       //|        | ALT/OPT|SHFT TOG|  |   CTRL |    CMD |   BASE |
-                                          KC_TRNS, KC_LALT,TD(TD_SHFT),  KC_LCTL, KC_LGUI,   TG(4)         
+                                          KC_TRNS, KC_LALT,TD(TD_SHFT),TD(TD_M2),TD(TD_M1),   TG(4)         
                                       //`--------------------------'  `--------------------------'
   )
 };
@@ -226,20 +229,20 @@ td_state_t cur_dance(tap_dance_state_t *state) {
 void tdlp_finished(tap_dance_state_t *state, void *user_data) {
     td_state = cur_dance(state);
     switch (td_state) {
-        case TD_SINGLE_TAP: register_code16(KC_LPRN); break; // left parens, ()
-        case TD_SINGLE_HOLD: register_code16(KC_LCBR); break; // left curly braces, {}
-        case TD_DOUBLE_TAP: register_code16(KC_LBRC); break; // left brackets, []
-        case TD_DOUBLE_SINGLE_TAP: tap_code16(KC_LPRN); register_code16(KC_LPRN); break; // fast typing, ((
+        case TD_SINGLE_TAP: register_code(KC_LPRN); break; // left parens, ()
+        case TD_SINGLE_HOLD: register_code(KC_LCBR); break; // left curly braces, {}
+        case TD_DOUBLE_TAP: register_code(KC_LBRC); break; // left brackets, []
+        case TD_DOUBLE_SINGLE_TAP: tap_code(KC_LPRN); register_code(KC_LPRN); break; // fast typing, ((
         default: break;
     }
 }
 
 void tdlp_reset(tap_dance_state_t *state, void *user_data) {
     switch (td_state) {
-        case TD_SINGLE_TAP: unregister_code16(KC_LPRN); break; // left parens, ()
-        case TD_SINGLE_HOLD: unregister_code16(KC_LCBR); break; // left curly braces, {}
-        case TD_DOUBLE_TAP: unregister_code16(KC_LBRC); break; // left brackets, []
-        case TD_DOUBLE_SINGLE_TAP: unregister_code16(KC_LPRN); break; // fast typing, ((
+        case TD_SINGLE_TAP: unregister_code(KC_LPRN); break; // left parens, ()
+        case TD_SINGLE_HOLD: unregister_code(KC_LCBR); break; // left curly braces, {}
+        case TD_DOUBLE_TAP: unregister_code(KC_LBRC); break; // left brackets, []
+        case TD_DOUBLE_SINGLE_TAP: unregister_code(KC_LPRN); break; // fast typing, ((
         default: break;
     }
     td_state = TD_NONE;
@@ -248,20 +251,20 @@ void tdlp_reset(tap_dance_state_t *state, void *user_data) {
 void tdrp_finished(tap_dance_state_t *state, void *user_data) {
     td_state = cur_dance(state);
     switch (td_state) {
-        case TD_SINGLE_TAP: register_code16(KC_RPRN); break; // left parens, ()
-        case TD_SINGLE_HOLD: register_code16(KC_RCBR); break; // left curly braces, {}
-        case TD_DOUBLE_TAP: register_code16(KC_RBRC); break; // left brackets, []
-        case TD_DOUBLE_SINGLE_TAP: tap_code16(KC_RPRN); register_code16(KC_RPRN); break; // fast typing, ((
+        case TD_SINGLE_TAP: register_code(KC_RPRN); break; // left parens, ()
+        case TD_SINGLE_HOLD: register_code(KC_RCBR); break; // left curly braces, {}
+        case TD_DOUBLE_TAP: register_code(KC_RBRC); break; // left brackets, []
+        case TD_DOUBLE_SINGLE_TAP: tap_code(KC_RPRN); register_code(KC_RPRN); break; // fast typing, ((
         default: break;
     }
 }
 
 void tdrp_reset(tap_dance_state_t *state, void *user_data) {
     switch (td_state) {
-        case TD_SINGLE_TAP: unregister_code16(KC_RPRN); break; // left parens, ()
-        case TD_SINGLE_HOLD: unregister_code16(KC_RCBR); break; // left curly braces, {}
-        case TD_DOUBLE_TAP: unregister_code16(KC_RBRC); break; // left brackets, []
-        case TD_DOUBLE_SINGLE_TAP: unregister_code16(KC_RPRN); break; // fast typing, ((
+        case TD_SINGLE_TAP: unregister_code(KC_RPRN); break; // left parens, ()
+        case TD_SINGLE_HOLD: unregister_code(KC_RCBR); break; // left curly braces, {}
+        case TD_DOUBLE_TAP: unregister_code(KC_RBRC); break; // left brackets, []
+        case TD_DOUBLE_SINGLE_TAP: unregister_code(KC_RPRN); break; // fast typing, ((
         default: break;
     }
     td_state = TD_NONE;
@@ -272,7 +275,7 @@ void td_sticky_shift_finished(tap_dance_state_t *state, void *user_data) {
     static bool held = false; // static variable to remember state.
     switch (td_state) {
         case TD_SINGLE_TAP: set_oneshot_mods(MOD_BIT(KC_LSFT)); break; // tap for oneshot shift
-        case TD_SINGLE_HOLD: register_code16(KC_LSFT); break; // hold for normal shift
+        case TD_SINGLE_HOLD: register_code(KC_LSFT); break; // hold for normal shift
         case TD_DOUBLE_TAP: // double tap for toggle shift
             held = !held; // toggle between held and release
             if(held) {
@@ -288,7 +291,7 @@ void td_sticky_shift_finished(tap_dance_state_t *state, void *user_data) {
 void td_sticky_shift_reset(tap_dance_state_t *state, void *user_data) {
     switch (td_state) {
         case TD_SINGLE_TAP: break; // one shot shift still active
-        case TD_SINGLE_HOLD: unregister_code16(KC_LSFT); break; // shift
+        case TD_SINGLE_HOLD: unregister_code(KC_LSFT); break; // shift
         case TD_DOUBLE_TAP: break; // Caps Lock
         default: break;
     }
@@ -321,48 +324,47 @@ void tdlayr_reset(tap_dance_state_t *state, void *user_data) {
     td_state = TD_NONE;
 }
 
-// void tdas_finished(tap_dance_state_t *state, void *user_data) {
-//     td_state = cur_dance(state);
-//     switch (td_state) {
-//         case TD_SINGLE_TAP: register_code(KC_LALT); break; // alt
-//         case TD_SINGLE_HOLD: register_code(KC_LALT); break; // alt
-//         case TD_DOUBLE_TAP: 
-//             register_code(KC_LALT);
-//             register_code(KC_LSFT);
-//             break; // ALT + SHIFT
-//         case TD_DOUBLE_HOLD: 
-//             register_code(KC_LALT);
-//             register_code(KC_LSFT);
-//             break; // ALT + SHIFT
-//         default: break;
-//     }
-// }
+void tdm1_finished(tap_dance_state_t *state, void *user_data) {
+    td_state = cur_dance(state);
+    switch (td_state) {
+        case TD_SINGLE_TAP: register_code(KC_MS_BTN1); break; // mouse button, left click
+        case TD_SINGLE_HOLD: register_code(KC_LGUI); break; // CMD when held
+        default: break;
+    }
+}
 
-// void tdas_reset(tap_dance_state_t *state, void *user_data) {
-//     switch (td_state) {
-//         case TD_SINGLE_TAP: unregister_code(KC_LALT); break; // alt
-//         case TD_SINGLE_HOLD: unregister_code(KC_LALT); break; // alt
-//         case TD_DOUBLE_TAP: 
-//             unregister_code(KC_LALT);
-//             unregister_code(KC_LSFT);
-//             break; // ALT + SHIFT
-//         case TD_DOUBLE_HOLD: 
-//             unregister_code(KC_LALT);
-//             unregister_code(KC_LSFT);
-//             break; // ALT + SHIFT
-//         default: break;
-//     }
-//     td_state = TD_NONE;
-// }
+void tdm1_reset(tap_dance_state_t *state, void *user_data) {
+    switch (td_state) {
+        case TD_SINGLE_TAP: unregister_code(KC_MS_BTN1); break; // mouse button, left click
+        case TD_SINGLE_HOLD: unregister_code(KC_LGUI); break; // release CMD
+        default: break;
+    }
+    td_state = TD_NONE;
+}
 
+void tdm2_finished(tap_dance_state_t *state, void *user_data) {
+    td_state = cur_dance(state);
+    switch (td_state) {
+        case TD_SINGLE_TAP: register_code(KC_MS_BTN2); break; // mouse button, right click
+        case TD_SINGLE_HOLD: register_code(KC_LCTL); break; // CTRL when held
+        default: break;
+    }
+}
 
+void tdm2_reset(tap_dance_state_t *state, void *user_data) {
+    switch (td_state) {
+        case TD_SINGLE_TAP: unregister_code(KC_MS_BTN2); break; // mouse button, right click
+        case TD_SINGLE_HOLD: unregister_code(KC_LCTL); break; // release CTRL
+        default: break;
+    }
+    td_state = TD_NONE;
+}
 // Define `ACTION_TAP_DANCE_FN_ADVANCED()` for each tapdance keycode, passing in `finished` and `reset` functions
 tap_dance_action_t tap_dance_actions[] = {
     [TD_LP] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, tdlp_finished, tdlp_reset),
     [TD_RP] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, tdrp_finished, tdrp_reset),
     [TD_SHFT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_sticky_shift_finished, td_sticky_shift_reset),
     [TD_LAYR] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, tdlayr_finished, tdlayr_reset),
-    // [TD_AS] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, tdas_finished, tdas_reset),
 };
 
 // Set a long-ish tapping term for tap-dance keys
@@ -370,7 +372,6 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record){
     switch(keycode) {
         case TD(TD_SHFT): return 275;
         case TD(TD_LAYR): return 275;
-        // case TD(TD_AS): return 275;
         default: return TAPPING_TERM;
     }
 }
@@ -399,6 +400,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
         return true;
 
+    // TD_SHFT takes care of this. But leaving it in for reference for a tap-hold custom key
     // Toggle Shift On/Off
     // case SHFT_TOG:
     //     if(record->event.pressed) { // when SHFT_TOG is pressed
