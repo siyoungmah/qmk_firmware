@@ -274,7 +274,14 @@ void td_sticky_shift_finished(tap_dance_state_t *state, void *user_data) {
     td_state = cur_dance(state);
     static bool held = false; // static variable to remember state.
     switch (td_state) {
-        case TD_SINGLE_TAP: set_oneshot_mods(MOD_BIT(KC_LSFT)); break; // tap for oneshot shift
+        case TD_SINGLE_TAP: 
+            if(held) {
+                unregister_code(KC_LSFT); // if we are ending a shift toggle
+                held = !held; 
+            } else {
+                set_oneshot_mods(MOD_BIT(KC_LSFT)); // tap for oneshot shift
+            }
+            break;
         case TD_SINGLE_HOLD: register_code(KC_LSFT); break; // hold for normal shift
         case TD_DOUBLE_TAP: // double tap for toggle shift
             held = !held; // toggle between held and release
@@ -384,13 +391,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   uint8_t host_os = detected_host_os();
 
   if (!process_custom_shift_keys(keycode, record)) { return false; }
-
-  if(!record->event.pressed) {
-    if(keyboard_report->mods & MOD_BIT(KC_LSFT)){
-        // remove left SHIFT keys one shot, works with TD_SHFT tap dance
-        unregister_mods(MOD_BIT(KC_LSFT));
-    }
-  }
+  
 
   switch (keycode) {
     // ESC + Grave
