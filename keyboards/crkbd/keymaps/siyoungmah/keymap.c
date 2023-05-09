@@ -196,8 +196,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|        | M WH ← |    M ← |    M ↓ |    M → | M WH → |                    |        |      ← |      ↓ |      → |   PGDN |        |
        KC_NO , KC_WH_L, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_R,                        KC_NO, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN,   KC_NO, 
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-  //|        |        |        |        |        |        |                    |        |        |        |        |        |        |
-        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, 
+  //|MISSION |        |        |        |        |        |                    |        |        |        |        |        |        |
+  //| Control|        |        |        |        |        |                    |        |        |        |        |        |        |
+      KC_MCTL,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, 
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                       //|        | ALT/OPT|SHFT TOG|  |   CTRL |    CMD |   BASE |
                                           KC_TRNS, KC_LALT,TD(TD_SHFT),TD(TD_M2),TD(TD_M1),   TG(4)         
