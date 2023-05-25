@@ -42,7 +42,7 @@ void oled_render_layer_state(void) {
     oled_write_P(PSTR("Layer"), false);
     switch (get_highest_layer(layer_state | default_layer_state)) {
         case L_COLEMAK:
-            oled_write_ln_P(PSTR("Colemak"), false);
+            oled_write_ln_P(PSTR("Canary"), false);
             break;
         case L_QWERTY:
             oled_write_ln_P(PSTR("QWERTY"), false);

@@ -110,18 +110,37 @@ void tdm2_reset(tap_dance_state_t *state, void *user_data);
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // base, Colemak_DH
+//   [0] = LAYOUT_split_3x6_3(
+//   //,--------------------------------------------------------------------------.                    ,-------------------------------------------------------------------------.
+//   //|     ` ~ |           Q |           W |           F |           P |      B |                    |      J |           L |           U |           Y |         ' " |    DEL |
+//       ESC_GRV0,         KC_Q,         KC_W,         KC_F,         KC_P,    KC_B,                         KC_J,         KC_L,         KC_U,         KC_Y,      KC_QUOT,  KC_DEL,       
+//   //|---------+-------------+-------------+-------------+-------------+--------|                    |--------+-------------+-------------+-------------+-------------+--------| 
+//   //|     _ - |           A |           R |           S |           T |      G |                    |      M |           N |           E |           I |           O |    ; : |
+//   //|         |        CTRL |     OPT/ALT |         CMD |       SHIFT |        |                    |        |       SHIFT |         CMD |     OPT/ALT |        CTRL |        | 
+//        KC_UNDS, LCTL_T(KC_A), LALT_T(KC_R), LGUI_T(KC_S), LSFT_T(KC_T),    KC_G,                         KC_M, RSFT_T(KC_N), RGUI_T(KC_E), RALT_T(KC_I), RCTL_T(KC_O), KC_SCLN, 
+//   //|---------+-------------+-------------+-------------+-------------+--------|                    |--------+-------------+-------------+-------------+-------------+--------| 
+//   //| Mission |           Z |           X |           C |           D |      V |                    |      K |           H |         , ! |         . ? |         / \ |   KOR/ |
+//   //| Control |        UNDO |         CUT |        COPY |             |  PASTE |                    |        |             |             |             |             |    ENG |    
+//        KC_MCTL,   LT(0,KC_Z),   LT(0,KC_X),   LT(0,KC_C),         KC_D, LT(0,KC_V),                      KC_K,         KC_H,      KC_COMM,       KC_DOT,      KC_SLSH,   DF(1),
+//   //|---------+-------------+-------------+-------------+-------------+---------------`     |----------------+-------------+-------------+-------------+-------------+--------|
+//   //                                      |         TAB |       SPACE |         SHIFT |     |          ENTER |   BACKSPACE |      TOGGLE |        
+//   //                                      |         NAV |     SYMBOLS |        Toggle |     |            NUM |             |     NUM/NAV |        
+//                                             LT(4,KC_TAB),  LT(3,KC_SPC),   TD(TD_SHFT),          LT(2,KC_ENT),     KC_BSPC,   TD(TD_LAYR)
+//                                         //`-------------------------------------------'     `--------------------------------------------'
+//   ),
+  // base, Canary
   [0] = LAYOUT_split_3x6_3(
   //,--------------------------------------------------------------------------.                    ,-------------------------------------------------------------------------.
-  //|     ` ~ |           Q |           W |           F |           P |      B |                    |      J |           L |           U |           Y |         ' " |    DEL |
-      ESC_GRV0,         KC_Q,         KC_W,         KC_F,         KC_P,    KC_B,                         KC_J,         KC_L,         KC_U,         KC_Y,      KC_QUOT,  KC_DEL,       
+  //|     ` ~ |           W |           L |           Y |           P |      B |                    |      Z |           F |           O |           U |         ' " |    DEL |
+      ESC_GRV0,         KC_W,         KC_L,         KC_Y,         KC_P,    KC_B,                  LT(0, KC_Z),         KC_F,         KC_O,         KC_U,      KC_QUOT,  KC_DEL,       
   //|---------+-------------+-------------+-------------+-------------+--------|                    |--------+-------------+-------------+-------------+-------------+--------| 
-  //|     _ - |           A |           R |           S |           T |      G |                    |      M |           N |           E |           I |           O |    ; : |
+  //|     _ - |           C |           R |           S |           T |      G |                    |      M |           N |           E |           I |           A |    ; : |
   //|         |        CTRL |     OPT/ALT |         CMD |       SHIFT |        |                    |        |       SHIFT |         CMD |     OPT/ALT |        CTRL |        | 
-       KC_UNDS, LCTL_T(KC_A), LALT_T(KC_R), LGUI_T(KC_S), LSFT_T(KC_T),    KC_G,                         KC_M, RSFT_T(KC_N), RGUI_T(KC_E), RALT_T(KC_I), RCTL_T(KC_O), KC_SCLN, 
+       KC_UNDS, LCTL_T(KC_C), LALT_T(KC_R), LGUI_T(KC_S), LSFT_T(KC_T),    KC_G,                         KC_M, RSFT_T(KC_N), RGUI_T(KC_E), RALT_T(KC_I), RCTL_T(KC_A), KC_SCLN, 
   //|---------+-------------+-------------+-------------+-------------+--------|                    |--------+-------------+-------------+-------------+-------------+--------| 
-  //| Mission |           Z |           X |           C |           D |      V |                    |      K |           H |         , ! |         . ? |         / \ |   KOR/ |
-  //| Control |        UNDO |         CUT |        COPY |             |  PASTE |                    |        |             |             |             |             |    ENG |    
-       KC_MCTL,   LT(0,KC_Z),   LT(0,KC_X),   LT(0,KC_C),         KC_D, LT(0,KC_V),                      KC_K,         KC_H,      KC_COMM,       KC_DOT,      KC_SLSH,   DF(1),
+  //| Mission |           Q |           J |           V |           D |      K |                    |      X |           H |         , ! |         . ? |         / \ |   KOR/ |
+  //| Control |             |             |       PASTE |             |        |                    |    CUT |             |             |             |             |    ENG |    
+       KC_MCTL,         KC_Q,         KC_J,   LT(0,KC_V),         KC_D,    KC_K,                   LT(0,KC_X),         KC_H,      KC_COMM,       KC_DOT,      KC_SLSH,   DF(1),
   //|---------+-------------+-------------+-------------+-------------+---------------`     |----------------+-------------+-------------+-------------+-------------+--------|
   //                                      |         TAB |       SPACE |         SHIFT |     |          ENTER |   BACKSPACE |      TOGGLE |        
   //                                      |         NAV |     SYMBOLS |        Toggle |     |            NUM |             |     NUM/NAV |        
@@ -173,14 +192,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // Symbols
   [3] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-  //|        |        |        |        |        |        |                    |      ^ |      + |      - |      * |    / \ |    DEL  |
-        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                      KC_CIRC, KC_PLUS, KC_MINS, KC_ASTR,  KC_SLSH,  KC_DEL,
+  //|        |        |        |        |        |        |                    |      ^ |      + |      - |      * |      # |   DEL  |
+        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                      KC_CIRC, KC_PLUS, KC_MINS, KC_ASTR, KC_HASH,  KC_DEL,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-  //|        |   CTRL | OPT/ALT|    CMD |  SHIFT |        |                    |      % |    = + |    & | |      $ |      @ |        |
-        KC_NO,  O_CTRL,   O_ALT,   O_GUI,  O_SHFT,   KC_NO,                      KC_PERC,  KC_EQL, KC_AMPR,  KC_DLR,   KC_AT,   KC_NO, 
+  //|        |   CTRL | OPT/ALT|    CMD |  SHIFT |        |                    |      % |    = + |    & | |      < |      > |    ; : |
+        KC_NO,  O_CTRL,   O_ALT,   O_GUI,  O_SHFT,   KC_NO,                      KC_PERC,  KC_EQL, KC_AMPR,  KC_LT,   KC_GT, KC_SCLN, 
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-  //|        |        |        |        |        |        |                    |      # |      < |      > |        |        |        |
-        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                      KC_HASH,   KC_LT,   KC_GT,   KC_NO,   KC_NO,   KC_NO, 
+  //|        |        |        |        |        |        |                    |      $ |      @ |    , ! |    . ? |    / \ |        |
+        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                      KC_DLR,    KC_AT, KC_COMM,  KC_DOT, KC_SLSH,   KC_NO, 
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                       //|        |        |  SHIFT |  |  ( [ { |  } ] ) |        |
                                             KC_NO, KC_TRNS,TD(TD_SHFT),  TD(TD_LP),TD(TD_RP), KC_NO
