@@ -135,12 +135,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       ESC_GRV0,         KC_W,         KC_L,         KC_Y,         KC_P,    KC_B,                  LT(0, KC_Z),         KC_F,         KC_O,         KC_U,      KC_QUOT,  KC_DEL,       
   //|---------+-------------+-------------+-------------+-------------+--------|                    |--------+-------------+-------------+-------------+-------------+--------| 
   //|     _ - |           C |           R |           S |           T |      G |                    |      M |           N |           E |           I |           A |    ; : |
-  //|         |        CTRL |     OPT/ALT |         CMD |       SHIFT |        |                    |        |       SHIFT |         CMD |     OPT/ALT |        CTRL |        | 
-       KC_UNDS, LCTL_T(KC_C), LALT_T(KC_R), LGUI_T(KC_S), LSFT_T(KC_T),    KC_G,                         KC_M, RSFT_T(KC_N), RGUI_T(KC_E), RALT_T(KC_I), RCTL_T(KC_A), KC_SCLN, 
+  //|         |             |        CTRL |     OPT?ALT |         CMD |        |                    |        |         CMD |     OPT/ALT |        CTRL |             |        | 
+       KC_UNDS,         KC_C, LCTL_T(KC_R), LALT_T(KC_S), LGUI_T(KC_T),    KC_G,                         KC_M, RGUI_T(KC_N), RALT_T(KC_E), RCTL_T(KC_I),         KC_A, KC_SCLN, 
   //|---------+-------------+-------------+-------------+-------------+--------|                    |--------+-------------+-------------+-------------+-------------+--------| 
-  //| Mission |           Q |           J |           V |           D |      K |                    |      X |           H |         , ! |         . ? |         / \ |   KOR/ |
+  //| Mission |           Q |           J |           V |           D |      K |                    |      X |           H |         / \ |         , ! |         . ? |   KOR/ |
   //| Control |             |             |       PASTE |             |        |                    |    CUT |             |             |             |             |    ENG |    
-       KC_MCTL,         KC_Q,         KC_J,   LT(0,KC_V),         KC_D,    KC_K,                   LT(0,KC_X),         KC_H,      KC_COMM,       KC_DOT,      KC_SLSH,   DF(1),
+       KC_MCTL,         KC_Q,         KC_J,   LT(0,KC_V),         KC_D,    KC_K,                   LT(0,KC_X),         KC_H,      KC_SLSH,       KC_COMM,      KC_DOT,   DF(1),
   //|---------+-------------+-------------+-------------+-------------+---------------`     |----------------+-------------+-------------+-------------+-------------+--------|
   //                                      |         TAB |       SPACE |         SHIFT |     |          ENTER |   BACKSPACE |      TOGGLE |        
   //                                      |         NAV |     SYMBOLS |        Toggle |     |            NUM |             |     NUM/NAV |        
@@ -195,11 +195,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|        |        |        |        |        |        |                    |      ^ |      + |      - |      * |      # |   DEL  |
         KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                      KC_CIRC, KC_PLUS, KC_MINS, KC_ASTR, KC_HASH,  KC_DEL,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-  //|        |   CTRL | OPT/ALT|    CMD |  SHIFT |        |                    |      % |    = + |    & | |      < |      > |    ; : |
-        KC_NO,  O_CTRL,   O_ALT,   O_GUI,  O_SHFT,   KC_NO,                      KC_PERC,  KC_EQL, KC_AMPR,  KC_LT,   KC_GT, KC_SCLN, 
+  //|        |        |    CTRL| OPT/ALT|    CMD |        |                    |      % |    = + |    & | |      < |      > |    ; : |
+        KC_NO,   KC_NO,  O_CTRL,   O_ALT,   O_GUI,   KC_NO,                      KC_PERC,  KC_EQL, KC_AMPR,  KC_LT,   KC_GT, KC_SCLN, 
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-  //|        |        |        |        |        |        |                    |      $ |      @ |    , ! |    . ? |    / \ |        |
-        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                      KC_DLR,    KC_AT, KC_COMM,  KC_DOT, KC_SLSH,   KC_NO, 
+  //|        |        |        |        |        |        |                    |      $ |      @ |    / \ |    , ! |    . ? |        |
+        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                      KC_DLR,    KC_AT, KC_SLSH,  KC_COMM, KC_DOT,   KC_NO, 
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                       //|        |        |  SHIFT |  |  ( [ { |  } ] ) |        |
                                             KC_NO, KC_TRNS,TD(TD_SHFT),  TD(TD_LP),TD(TD_RP), KC_NO
