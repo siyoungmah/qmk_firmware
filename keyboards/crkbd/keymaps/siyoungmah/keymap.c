@@ -136,7 +136,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|---------+-------------+-------------+-------------+-------------+--------|                    |--------+-------------+-------------+-------------+-------------+--------| 
   //|     _ - |           C |           R |           S |           T |      G |                    |      M |           N |           E |           I |           A |    ; : |
   //|         |             |        CTRL |     OPT?ALT |         CMD |        |                    |        |         CMD |     OPT/ALT |        CTRL |             |        | 
-       KC_MINS,         KC_C, LCTL_T(KC_R), LALT_T(KC_S), LGUI_T(KC_T),    KC_G,                         KC_M, RGUI_T(KC_N), RALT_T(KC_E), RCTL_T(KC_I),         KC_A, KC_SCLN, 
+       KC_MINS,   LT(0,KC_C), LCTL_T(KC_R), LALT_T(KC_S), LGUI_T(KC_T),    KC_G,                         KC_M, RGUI_T(KC_N), RALT_T(KC_E), RCTL_T(KC_I),         KC_A, KC_SCLN, 
   //|---------+-------------+-------------+-------------+-------------+--------|                    |--------+-------------+-------------+-------------+-------------+--------| 
   //| Mission |           Q |           J |           V |           D |      K |                    |      X |           H |         / \ |         , ! |         . ? |   KOR/ |
   //| Control |             |             |       PASTE |             |        |                    |    CUT |             |             |             |             |    ENG |    
