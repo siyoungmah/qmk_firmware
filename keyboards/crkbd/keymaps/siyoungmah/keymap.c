@@ -43,7 +43,7 @@ enum custom_keycodes {
 const custom_shift_key_t custom_shift_keys[] = {
   {KC_DOT , KC_QUES}, // Shift . is ?
   {KC_COMM, KC_EXLM}, // Shift , is !
-  {KC_UNDS, KC_MINS}, // Shift _ is -
+//   {KC_UNDS, KC_MINS}, // Shift _ is -
   {KC_SLSH, KC_BSLS}, // Shift / is backslash
   {KC_AMPR, KC_PIPE}, // Shift & is |
   {KC_P1, KC_F1}, // Shift F1 is 1 
@@ -136,7 +136,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|---------+-------------+-------------+-------------+-------------+--------|                    |--------+-------------+-------------+-------------+-------------+--------| 
   //|     _ - |           C |           R |           S |           T |      G |                    |      M |           N |           E |           I |           A |    ; : |
   //|         |             |        CTRL |     OPT?ALT |         CMD |        |                    |        |         CMD |     OPT/ALT |        CTRL |             |        | 
-       KC_UNDS,         KC_C, LCTL_T(KC_R), LALT_T(KC_S), LGUI_T(KC_T),    KC_G,                         KC_M, RGUI_T(KC_N), RALT_T(KC_E), RCTL_T(KC_I),         KC_A, KC_SCLN, 
+       KC_MINS,         KC_C, LCTL_T(KC_R), LALT_T(KC_S), LGUI_T(KC_T),    KC_G,                         KC_M, RGUI_T(KC_N), RALT_T(KC_E), RCTL_T(KC_I),         KC_A, KC_SCLN, 
   //|---------+-------------+-------------+-------------+-------------+--------|                    |--------+-------------+-------------+-------------+-------------+--------| 
   //| Mission |           Q |           J |           V |           D |      K |                    |      X |           H |         / \ |         , ! |         . ? |   KOR/ |
   //| Control |             |             |       PASTE |             |        |                    |    CUT |             |             |             |             |    ENG |    
@@ -156,7 +156,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|---------+-------------+-------------+-------------+-------------+--------|                    |--------+-------------+-------------+-------------+-------------+--------|
   //|     _ - |           A |           S |           D |           F |      G |                    |      H |           J |           K |           L |        ' "  |    ; : |
   //|         |        CTRL |     OPT/ALT |         CMD |       SHIFT |        |                    |        |       SHIFT |         CMD |     OPT/ALT |        CTRL |        | 
-       KC_UNDS, LCTL_T(KC_A), LALT_T(KC_S),   LGUI(KC_D), LSFT_T(KC_F),    KC_G,                         KC_H,  RSFT_T(KC_J), RGUI_T(KC_K),RALT_T(KC_L),RCTL_T(KC_QUOT), KC_SCLN,
+       KC_MINS, LCTL_T(KC_A), LALT_T(KC_S),   LGUI(KC_D), LSFT_T(KC_F),    KC_G,                         KC_H,  RSFT_T(KC_J), RGUI_T(KC_K),RALT_T(KC_L),RCTL_T(KC_QUOT), KC_SCLN,
   //|---------+-------------+-------------+-------------+-------------+--------|                    |--------+-------------+-------------+-------------+-------------+--------| 
   //| Mission |           Z |           X |           C |           V |      B |                    |      N |           M |         , ! |         . ? |         / \ |   KOR/ |
   //| Control |        UNDO |         CUT |        COPY |             |        |                    |        |             |             |             |             |    ENG |    
@@ -201,8 +201,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|        |        |        |        |        |        |                    |      $ |      @ |    / \ |    , ! |    . ? |        |
         KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                      KC_DLR,    KC_AT, KC_SLSH,  KC_COMM, KC_DOT,   KC_NO, 
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                      //|        |        |  SHIFT |  |  ( [ { |  } ] ) |        |
-                                            KC_NO, KC_TRNS,TD(TD_SHFT),  TD(TD_LP),TD(TD_RP), KC_NO
+                                      //|        |        |  SHIFT |  |        |  ( [ { |  } ] ) |
+                                            KC_NO, KC_TRNS,TD(TD_SHFT),  KC_NO, TD(TD_LP),TD(TD_RP)
                                       //`--------------------------'  `--------------------------'
   ),
 
