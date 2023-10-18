@@ -68,8 +68,8 @@ enum td_keycodes {
     TD_RP, // single tap ), double tap ], hold }};
     TD_SHFT, // single tap shift, hold shift, double tap CAPS LOCK
     TD_LAYR, // toggle layers (NUM and NAV)
-    TD_M1, // tap for Mouse BTN1, hold for CMD
-    TD_M2, // tap for Mouse BTN2, hold for CTRL
+    // TD_M1, // tap for Mouse BTN1, hold for CMD
+    // TD_M2, // tap for Mouse BTN2, hold for CTRL
 };
 
 // Define a type containing as many tapdance states as you need
@@ -195,34 +195,52 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|        |        |        |        |        |        |                    |      ^ |      + |      - |      * |      # |   DEL  |
         KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                      KC_CIRC, KC_PLUS, KC_MINS, KC_ASTR, KC_HASH,  KC_DEL,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-  //|        |        |    CTRL| OPT/ALT|    CMD |        |                    |      % |    = + |    & | |      < |      > |    ; : |
-        KC_NO,   KC_NO,  O_CTRL,   O_ALT,   O_GUI,   KC_NO,                      KC_PERC,  KC_EQL, KC_AMPR,  KC_LT,   KC_GT, KC_SCLN, 
+  //|        |  shift |    CTRL| OPT/ALT|    CMD |        |                    |      % |    = + |    & | |      < |      > |    ; : |
+        KC_NO, KC_LSFT, KC_LCTL, KC_LALT,  KC_GUI,   KC_NO,                      KC_PERC,  KC_EQL, KC_AMPR,  KC_LT,   KC_GT, KC_SCLN, 
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
   //|        |        |        |        |        |        |                    |      $ |      @ |    / \ |    , ! |    . ? |        |
         KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                      KC_DLR,    KC_AT, KC_SLSH,  KC_COMM, KC_DOT,   KC_NO, 
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                      //|        |        |  SHIFT |  |        |  ( [ { |  } ] ) |
-                                            KC_NO, KC_TRNS,TD(TD_SHFT),  KC_NO, TD(TD_LP),TD(TD_RP)
+                                      //|        |        |  SHIFT |  |  ( [ { |  } ] ) |        |
+                                            KC_NO, KC_TRNS,TD(TD_SHFT),TD(TD_LP),TD(TD_RP), KC_NO
                                       //`--------------------------'  `--------------------------'
   ),
 
-  // Nav
+  // Nav w/ mouse controls
   [4] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-  //|    ESC |        | M WH ↑ |    M ↑ | M WH ↓ |        |                    |        |   HOME |      ↑ |    END |   PGUP |        |
-       KC_ESC,   KC_NO, KC_WH_U, KC_MS_U, KC_WH_D,   KC_NO,                        KC_NO, KC_HOME,   KC_UP,  KC_END, KC_PGUP,   KC_NO, 
+  //|    ESC |        |        |        |        |        |                   |        |   HOME |      ↑ |    END |   PGUP |        |
+       KC_ESC,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                        KC_NO, KC_HOME,   KC_UP,  KC_END, KC_PGUP,   KC_NO, 
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-  //|        | M WH ← |    M ← |    M ↓ |    M → | M WH → |                    |        |      ← |      ↓ |      → |   PGDN |        |
-       KC_NO , KC_WH_L, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_R,                        KC_NO, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN,   KC_NO, 
+  //|        |  shift |    CTRL| OPT/ALT|    CMD |        |                    |        |      ← |      ↓ |      → |   PGDN |        |
+        KC_NO, KC_LSFT, KC_LCTL, KC_LALT,  KC_GUI,   KC_NO,                        KC_NO, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN,   KC_NO, 
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
   //|MISSION |        |        |        |        |        |                    |        |        |        |        |        |        |
   //| Control|        |        |        |        |        |                    |        |        |        |        |        |        |
       KC_MCTL,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, 
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                      //|        | ALT/OPT|SHFT TOG|  |   CTRL |    CMD |   BASE |
-                                          KC_TRNS, KC_LALT,TD(TD_SHFT),TD(TD_M2),TD(TD_M1),   TG(4)         
+                                      //|        | ALT/OPT|SHFT TOG|  |SHFT TOG|    CMD |   BASE |
+                                          KC_TRNS, KC_LALT,TD(TD_SHFT),TD(TD_SHFT), O_GUI,   TG(4)         
                                       //`--------------------------'  `--------------------------'
   )
+
+// Nav w/ mouse controls
+//   [4] = LAYOUT_split_3x6_3(
+//   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
+//   //|    ESC |        | M WH ↑ |    M ↑ | M WH ↓ |        |                    |        |   HOME |      ↑ |    END |   PGUP |        |
+//        KC_ESC,   KC_NO, KC_WH_U, KC_MS_U, KC_WH_D,   KC_NO,                        KC_NO, KC_HOME,   KC_UP,  KC_END, KC_PGUP,   KC_NO, 
+//   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+//   //|        | M WH ← |    M ← |    M ↓ |    M → | M WH → |                    |        |      ← |      ↓ |      → |   PGDN |        |
+//        KC_NO , KC_WH_L, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_R,                        KC_NO, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN,   KC_NO, 
+//   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+//   //|MISSION |        |        |        |        |        |                    |        |        |        |        |        |        |
+//   //| Control|        |        |        |        |        |                    |        |        |        |        |        |        |
+//       KC_MCTL,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, 
+//   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
+//                                       //|        | ALT/OPT|SHFT TOG|  |   CTRL |    CMD |   BASE |
+//                                           KC_TRNS, KC_LALT,TD(TD_SHFT),TD(TD_M2),TD(TD_M1),   TG(4)         
+//                                       //`--------------------------'  `--------------------------'
+//   )
 };
 
 //=======TAPDANCE FUNCTIONALITY=========
@@ -392,8 +410,8 @@ tap_dance_action_t tap_dance_actions[] = {
     [TD_RP] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, tdrp_finished, tdrp_reset),
     [TD_SHFT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_sticky_shift_finished, td_sticky_shift_reset),
     [TD_LAYR] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, tdlayr_finished, tdlayr_reset),
-    [TD_M1] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, tdm1_finished, tdm1_reset),
-    [TD_M2] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, tdm2_finished, tdm2_reset),
+    // [TD_M1] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, tdm1_finished, tdm1_reset),
+    // [TD_M2] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, tdm2_finished, tdm2_reset),
 };
 
 // Set a long-ish tapping term for tap-dance keys
