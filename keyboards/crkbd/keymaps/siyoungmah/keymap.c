@@ -196,7 +196,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                      KC_CIRC, KC_PLUS, KC_MINS, KC_ASTR, KC_HASH,  KC_DEL,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
   //|        |  shift |    CTRL| OPT/ALT|    CMD |        |                    |      % |    = + |    & | |      < |      > |    ; : |
-        KC_NO, KC_LSFT, KC_LCTL, KC_LALT,  KC_GUI,   KC_NO,                      KC_PERC,  KC_EQL, KC_AMPR,  KC_LT,   KC_GT, KC_SCLN, 
+        KC_NO, KC_LSFT, KC_LCTL, KC_LALT,  KC_LGUI,   KC_NO,                      KC_PERC,  KC_EQL, KC_AMPR,  KC_LT,   KC_GT, KC_SCLN, 
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
   //|        |        |        |        |        |        |                    |      $ |      @ |    / \ |    , ! |    . ? |        |
         KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                      KC_DLR,    KC_AT, KC_SLSH,  KC_COMM, KC_DOT,   KC_NO, 
@@ -213,7 +213,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        KC_ESC,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                        KC_NO, KC_HOME,   KC_UP,  KC_END, KC_PGUP,   KC_NO, 
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
   //|        |  shift |    CTRL| OPT/ALT|    CMD |        |                    |        |      ← |      ↓ |      → |   PGDN |        |
-        KC_NO, KC_LSFT, KC_LCTL, KC_LALT,  KC_GUI,   KC_NO,                        KC_NO, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN,   KC_NO, 
+        KC_NO, KC_LSFT, KC_LCTL, KC_LALT,  KC_LGUI,   KC_NO,                        KC_NO, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN,   KC_NO, 
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
   //|MISSION |        |        |        |        |        |                    |        |        |        |        |        |        |
   //| Control|        |        |        |        |        |                    |        |        |        |        |        |        |
