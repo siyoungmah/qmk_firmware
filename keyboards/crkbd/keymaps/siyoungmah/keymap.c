@@ -29,9 +29,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define O_ALT OSM(MOD_LALT)
 #define O_GUI OSM(MOD_LGUI)
 
-// Tap-Hold Grave/ESC
-#define ESC_GRV0 LT(0, KC_GRV)
-#define ESC_GRV1 LT(1, KC_GRV)
+// // Tap-Hold Grave/ESC
+// #define ESC_GRV0 LT(0, KC_GRV)
+// #define ESC_GRV1 LT(1, KC_GRV)
 
 // custom keycodes for Macros
 enum custom_keycodes {
@@ -41,11 +41,11 @@ enum custom_keycodes {
 // custom shift keys
 // link: https://getreuer.info/posts/keyboards/custom-shift-keys/index.html
 const custom_shift_key_t custom_shift_keys[] = {
-  {KC_DOT , KC_QUES}, // Shift . is ?
-  {KC_COMM, KC_EXLM}, // Shift , is !
+//   {KC_DOT , KC_QUES}, // Shift . is ?
+//   {KC_COMM, KC_EXLM}, // Shift , is !
 //   {KC_UNDS, KC_MINS}, // Shift _ is -
-  {KC_SLSH, KC_BSLS}, // Shift / is backslash
-  {KC_AMPR, KC_PIPE}, // Shift & is |
+//   {KC_SLSH, KC_BSLS}, // Shift / is backslash
+//   {KC_AMPR, KC_PIPE}, // Shift & is |
   {KC_P1, KC_F1}, // Shift F1 is 1 
   {KC_P2, KC_F2}, // Shift F2 is 2 
   {KC_P3, KC_F3}, // Shift F3 is 3 
@@ -64,8 +64,8 @@ uint8_t NUM_CUSTOM_SHIFT_KEYS =
 
 // Tap Dance keycodes
 enum td_keycodes {
-    TD_LP, // single tap (, double tap [, hold {
-    TD_RP, // single tap ), double tap ], hold }};
+    TD_LP, // single tap {, hold [
+    TD_RP, // single tap }, hold ];
     TD_SHFT, // single tap shift, hold shift, double tap CAPS LOCK
     TD_LAYR, // toggle layers (NUM and NAV)
     // TD_M1, // tap for Mouse BTN1, hold for CMD
@@ -131,16 +131,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // base, Canary
   [0] = LAYOUT_split_3x6_3(
   //,--------------------------------------------------------------------------.                    ,-------------------------------------------------------------------------.
-  //|     ` ~ |           W |           L |           Y |           P |      B |                    |      Z |           F |           O |           U |         ' " |    DEL |
-      ESC_GRV0,         KC_W,         KC_L,         KC_Y,         KC_P,    KC_B,                  LT(0, KC_Z),         KC_F,         KC_O,         KC_U,      KC_QUOT,  KC_DEL,       
+  //|     ESC |           W |           L |           Y |           P |      B |                    |      Z |           F |           O |           U |         DEL |        |
+        KC_ESC,         KC_W,         KC_L,         KC_Y,         KC_P,    KC_B,                  LT(0, KC_Z),         KC_F,         KC_O,         KC_U,      KC_DEL,    KC_NO,       
   //|---------+-------------+-------------+-------------+-------------+--------|                    |--------+-------------+-------------+-------------+-------------+--------| 
-  //|     _ - |           C |           R |           S |           T |      G |                    |      M |           N |           E |           I |           A |    ; : |
+  //|         |           C |           R |           S |           T |      G |                    |      M |           N |           E |           I |           A |        |
   //|         |             |        CTRL |     OPT?ALT |         CMD |        |                    |        |         CMD |     OPT/ALT |        CTRL |             |        | 
-       KC_MINS,   LT(0,KC_C), LCTL_T(KC_R), LALT_T(KC_S), LGUI_T(KC_T),    KC_G,                         KC_M, RGUI_T(KC_N), RALT_T(KC_E), RCTL_T(KC_I),         KC_A, KC_SCLN, 
+         KC_NO,   LT(0,KC_C), LCTL_T(KC_R), LALT_T(KC_S), LGUI_T(KC_T),    KC_G,                         KC_M, RGUI_T(KC_N), RALT_T(KC_E), RCTL_T(KC_I),         KC_A,   KC_NO, 
   //|---------+-------------+-------------+-------------+-------------+--------|                    |--------+-------------+-------------+-------------+-------------+--------| 
-  //| Mission |           Q |           J |           V |           D |      K |                    |      X |           H |         / \ |         , ! |         . ? |   KOR/ |
+  //| Mission |           Q |           J |           V |           D |      K |                    |      X |           H |         , ! |         . ? |         / \ |   KOR/ |
   //| Control |             |             |       PASTE |             |        |                    |    CUT |             |             |             |             |    ENG |    
-       KC_MCTL,         KC_Q,         KC_J,   LT(0,KC_V),         KC_D,    KC_K,                   LT(0,KC_X),         KC_H,      KC_SLSH,       KC_COMM,      KC_DOT,   DF(1),
+       KC_MCTL,         KC_Q,         KC_J,   LT(0,KC_V),         KC_D,    KC_K,                   LT(0,KC_X),         KC_H,      KC_COMM,       KC_DOT,      KC_SLSH,   DF(1),
   //|---------+-------------+-------------+-------------+-------------+---------------`     |----------------+-------------+-------------+-------------+-------------+--------|
   //                                      |         TAB |       SPACE |         SHIFT |     |          ENTER |   BACKSPACE |      TOGGLE |        
   //                                      |         NAV |     SYMBOLS |        Toggle |     |            NUM |             |     NUM/NAV |        
@@ -151,12 +151,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //base_2, QWERTY for Korean
   [1] = LAYOUT_split_3x6_3(
   //,--------------------------------------------------------------------------.                    ,-------------------------------------------------------------------------.
-  //|     ` ~ |           Q |           W |           E |           R |      T |                    |      Y |           U |           I |           O |           P |    DEL |
-      ESC_GRV1,         KC_Q,         KC_W,         KC_E,         KC_R,    KC_T,                         KC_Y,         KC_U,         KC_I,         KC_O,         KC_P,  KC_DEL,
+  //|     ESC |           Q |           W |           E |           R |      T |                    |      Y |           U |           I |           O |           P |    DEL |
+        KC_ESC,         KC_Q,         KC_W,         KC_E,         KC_R,    KC_T,                         KC_Y,         KC_U,         KC_I,         KC_O,         KC_P,  KC_DEL,
   //|---------+-------------+-------------+-------------+-------------+--------|                    |--------+-------------+-------------+-------------+-------------+--------|
-  //|     _ - |           A |           S |           D |           F |      G |                    |      H |           J |           K |           L |        ' "  |    ; : |
+  //|         |           A |           S |           D |           F |      G |                    |      H |           J |           K |           L |        ' "  |        |
   //|         |        CTRL |     OPT/ALT |         CMD |       SHIFT |        |                    |        |       SHIFT |         CMD |     OPT/ALT |        CTRL |        | 
-       KC_MINS, LCTL_T(KC_A), LALT_T(KC_S),   LGUI(KC_D), LSFT_T(KC_F),    KC_G,                         KC_H,  RSFT_T(KC_J), RGUI_T(KC_K),RALT_T(KC_L),RCTL_T(KC_QUOT), KC_SCLN,
+         KC_NO, LCTL_T(KC_A), LALT_T(KC_S),   LGUI(KC_D), LSFT_T(KC_F),    KC_G,                         KC_H,  RSFT_T(KC_J), RGUI_T(KC_K),RALT_T(KC_L),RCTL_T(KC_QUOT), KC_NO,
   //|---------+-------------+-------------+-------------+-------------+--------|                    |--------+-------------+-------------+-------------+-------------+--------| 
   //| Mission |           Z |           X |           C |           V |      B |                    |      N |           M |         , ! |         . ? |         / \ |   KOR/ |
   //| Control |        UNDO |         CUT |        COPY |             |        |                    |        |             |             |             |             |    ENG |    
@@ -192,14 +192,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // Symbols
   [3] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-  //|        |        |        |        |        |        |                    |      ^ |      + |      - |      * |      # |   DEL  |
-        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                      KC_CIRC, KC_PLUS, KC_MINS, KC_ASTR, KC_HASH,  KC_DEL,
+  //|        |      ` |      # |      @ |      " |      * |                    |      ^ |      + |      ! |      ? |       |         |
+        KC_NO,  KC_GRV, KC_HASH,   KC_AT,  KC_DQT, KC_ASTR,                      KC_CIRC, KC_PLUS, KC_EXLM, KC_QUES,  KC_NO,    KC_NO,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-  //|        |  shift |    CTRL| OPT/ALT|    CMD |        |                    |      % |    = + |    & | |      < |      > |    ; : |
-        KC_NO, KC_LSFT, KC_LCTL, KC_LALT,  KC_LGUI,   KC_NO,                      KC_PERC,  KC_EQL, KC_AMPR,  KC_LT,   KC_GT, KC_SCLN, 
+  //|        |      < |      > |      & |      ' |        |                    |      % |    = + |      | |      ( |      ) |        |
+        KC_NO,   KC_LT,   KC_GT, KC_AMPR, KC_QUOT,   KC_NO,                      KC_PERC, KC_EQL, KC_PIPE, KC_LPRN, KC_RPRN,   KC_NO, 
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-  //|        |        |        |        |        |        |                    |      $ |      @ |    / \ |    , ! |    . ? |        |
-        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                      KC_DLR,    KC_AT, KC_SLSH,  KC_COMM, KC_DOT,   KC_NO, 
+  //|        |        |        |      ~ |      _ |        |                    |      $ |      - |      ; |      : |      \ |        |
+        KC_NO,   KC_NO,   KC_NO, KC_TILD, KC_UNDS,   KC_NO,                      KC_DLR,   KC_MIN, KC_SLSH, KC_COLN, KC_BSLS,   KC_NO, 
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                       //|        |        |  SHIFT |  |  ( [ { |  } ] ) |        |
                                             KC_NO, KC_TRNS,TD(TD_SHFT),TD(TD_LP),TD(TD_RP), KC_NO
@@ -267,20 +267,20 @@ td_state_t cur_dance(tap_dance_state_t *state) {
 void tdlp_finished(tap_dance_state_t *state, void *user_data) {
     td_state = cur_dance(state);
     switch (td_state) {
-        case TD_SINGLE_TAP: register_code16(KC_LPRN); break; // left parens, ()
-        case TD_SINGLE_HOLD: register_code16(KC_LCBR); break; // left curly braces, {}
-        case TD_DOUBLE_TAP: register_code(KC_LBRC); break; // left brackets, []
-        case TD_DOUBLE_SINGLE_TAP: tap_code16(KC_LPRN); register_code16(KC_LPRN); break; // fast typing, ((
+        case TD_SINGLE_TAP: register_code16(KC_LCBR); break; // left parens, {}
+        case TD_SINGLE_HOLD: register_code16(KC_LBRC); break; // left curly braces, []
+        // case TD_DOUBLE_TAP: register_code(KC_LBRC); break; // left brackets, []
+        case TD_DOUBLE_SINGLE_TAP: tap_code16(KC_LCBR); register_code16(KC_LCBR); break; // fast typing, {{
         default: break;
     }
 }
 
 void tdlp_reset(tap_dance_state_t *state, void *user_data) {
     switch (td_state) {
-        case TD_SINGLE_TAP: unregister_code16(KC_LPRN); break; // left parens, ()
-        case TD_SINGLE_HOLD: unregister_code16(KC_LCBR); break; // left curly braces, {}
-        case TD_DOUBLE_TAP: unregister_code(KC_LBRC); break; // left brackets, []
-        case TD_DOUBLE_SINGLE_TAP: unregister_code16(KC_LPRN); break; // fast typing, ((
+        case TD_SINGLE_TAP: register_code16(KC_LCBR); break; // left parens, {}
+        case TD_SINGLE_HOLD: register_code16(KC_LBRC); break; // left curly braces, []
+        // case TD_DOUBLE_TAP: register_code(KC_LBRC); break; // left brackets, []
+        case TD_DOUBLE_SINGLE_TAP: tap_code16(KC_LCBR); register_code16(KC_LCBR); break; // fast typing, {{
         default: break;
     }
     td_state = TD_NONE;
@@ -289,20 +289,20 @@ void tdlp_reset(tap_dance_state_t *state, void *user_data) {
 void tdrp_finished(tap_dance_state_t *state, void *user_data) {
     td_state = cur_dance(state);
     switch (td_state) {
-        case TD_SINGLE_TAP: register_code16(KC_RPRN); break; // left parens, ()
-        case TD_SINGLE_HOLD: register_code16(KC_RCBR); break; // left curly braces, {}
-        case TD_DOUBLE_TAP: register_code(KC_RBRC); break; // left brackets, []
-        case TD_DOUBLE_SINGLE_TAP: tap_code16(KC_RPRN); register_code16(KC_RPRN); break; // fast typing, ((
+        case TD_SINGLE_TAP: register_code16(KC_RCBR); break; // left parens, {}
+        case TD_SINGLE_HOLD: register_code16(KC_RBRC); break; // left curly braces, []
+        // case TD_DOUBLE_TAP: register_code(KC_RBRC); break; // left brackets, []
+        case TD_DOUBLE_SINGLE_TAP: tap_code16(KC_RCBR); register_code16(KC_RCBR); break; // fast typing, }}
         default: break;
     }
 }
 
 void tdrp_reset(tap_dance_state_t *state, void *user_data) {
     switch (td_state) {
-        case TD_SINGLE_TAP: unregister_code16(KC_RPRN); break; // left parens, ()
-        case TD_SINGLE_HOLD: unregister_code16(KC_RCBR); break; // left curly braces, {}
-        case TD_DOUBLE_TAP: unregister_code(KC_RBRC); break; // left brackets, []
-        case TD_DOUBLE_SINGLE_TAP: unregister_code16(KC_RPRN); break; // fast typing, ((
+        case TD_SINGLE_TAP: register_code16(KC_RCBR); break; // left parens, {}
+        case TD_SINGLE_HOLD: register_code16(KC_RBRC); break; // left curly braces, []
+        // case TD_DOUBLE_TAP: register_code(KC_RBRC); break; // left brackets, []
+        case TD_DOUBLE_SINGLE_TAP: tap_code16(KC_RCBR); register_code16(KC_RCBR); break; // fast typing, }}
         default: break;
     }
     td_state = TD_NONE;
