@@ -199,10 +199,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_NO,   KC_LT,   KC_GT, KC_AMPR, KC_QUOT,   KC_NO,                      KC_PERC, KC_EQL, KC_PIPE, KC_LPRN, KC_RPRN,   KC_NO, 
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
   //|        |        |        |      ~ |      _ |        |                    |      $ |      - |      ; |      : |      \ |        |
-        KC_NO,   KC_NO,   KC_NO, KC_TILD, KC_UNDS,   KC_NO,                      KC_DLR,   KC_MIN, KC_SLSH, KC_COLN, KC_BSLS,   KC_NO, 
+        KC_NO,   KC_NO,   KC_NO, KC_TILD, KC_UNDS,   KC_NO,                      KC_DLR,  KC_MINS, KC_SCLN, KC_COLN, KC_BSLS,   KC_NO, 
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                       //|        |        |  SHIFT |  |  ( [ { |  } ] ) |        |
-                                            KC_NO, KC_TRNS,TD(TD_SHFT),TD(TD_LP),TD(TD_RP), KC_NO
+                                            KC_NO, KC_TRNS,TD(TD_SHFT),TD(TD_LP),TD(TD_RP),   KC_NO
                                       //`--------------------------'  `--------------------------'
   ),
 
@@ -267,20 +267,20 @@ td_state_t cur_dance(tap_dance_state_t *state) {
 void tdlp_finished(tap_dance_state_t *state, void *user_data) {
     td_state = cur_dance(state);
     switch (td_state) {
-        case TD_SINGLE_TAP: register_code16(KC_LCBR); break; // left parens, {}
-        case TD_SINGLE_HOLD: register_code16(KC_LBRC); break; // left curly braces, []
+        case TD_SINGLE_TAP: register_code16(KC_LCBR); break; // left curly braces, {}
+        case TD_SINGLE_HOLD: register_code(KC_LBRC); break; // left brackets, []
         // case TD_DOUBLE_TAP: register_code(KC_LBRC); break; // left brackets, []
-        case TD_DOUBLE_SINGLE_TAP: tap_code16(KC_LCBR); register_code16(KC_LCBR); break; // fast typing, {{
+        case TD_DOUBLE_SINGLE_TAP: tap_code16(KC_LCBR); register_code16(KC_LCBR); break; // fast typing, ((
         default: break;
     }
 }
 
 void tdlp_reset(tap_dance_state_t *state, void *user_data) {
     switch (td_state) {
-        case TD_SINGLE_TAP: register_code16(KC_LCBR); break; // left parens, {}
-        case TD_SINGLE_HOLD: register_code16(KC_LBRC); break; // left curly braces, []
-        // case TD_DOUBLE_TAP: register_code(KC_LBRC); break; // left brackets, []
-        case TD_DOUBLE_SINGLE_TAP: tap_code16(KC_LCBR); register_code16(KC_LCBR); break; // fast typing, {{
+        case TD_SINGLE_TAP: unregister_code16(KC_LCBR); break; // left curly braces, {}
+        case TD_SINGLE_HOLD: unregister_code(KC_LBRC); break; // left brackets, []
+        // case TD_DOUBLE_TAP: unregister_code(KC_LBRC); break; // left brackets, []
+        case TD_DOUBLE_SINGLE_TAP: unregister_code16(KC_LCBR); break; // fast typing, ((
         default: break;
     }
     td_state = TD_NONE;
@@ -289,20 +289,20 @@ void tdlp_reset(tap_dance_state_t *state, void *user_data) {
 void tdrp_finished(tap_dance_state_t *state, void *user_data) {
     td_state = cur_dance(state);
     switch (td_state) {
-        case TD_SINGLE_TAP: register_code16(KC_RCBR); break; // left parens, {}
-        case TD_SINGLE_HOLD: register_code16(KC_RBRC); break; // left curly braces, []
+        case TD_SINGLE_TAP: register_code16(KC_RCBR); break; // left parens, ()
+        case TD_SINGLE_HOLD: register_code(KC_RBRC); break; // left curly braces, {}
         // case TD_DOUBLE_TAP: register_code(KC_RBRC); break; // left brackets, []
-        case TD_DOUBLE_SINGLE_TAP: tap_code16(KC_RCBR); register_code16(KC_RCBR); break; // fast typing, }}
+        case TD_DOUBLE_SINGLE_TAP: tap_code16(KC_RCBR); register_code16(KC_RCBR); break; // fast typing, ((
         default: break;
     }
 }
 
 void tdrp_reset(tap_dance_state_t *state, void *user_data) {
     switch (td_state) {
-        case TD_SINGLE_TAP: register_code16(KC_RCBR); break; // left parens, {}
-        case TD_SINGLE_HOLD: register_code16(KC_RBRC); break; // left curly braces, []
-        // case TD_DOUBLE_TAP: register_code(KC_RBRC); break; // left brackets, []
-        case TD_DOUBLE_SINGLE_TAP: tap_code16(KC_RCBR); register_code16(KC_RCBR); break; // fast typing, }}
+        case TD_SINGLE_TAP: unregister_code16(KC_RCBR); break; // left parens, ()
+        case TD_SINGLE_HOLD: unregister_code(KC_RBRC); break; // left curly braces, {}
+        // case TD_DOUBLE_TAP: unregister_code(KC_RBRC); break; // left brackets, []
+        case TD_DOUBLE_SINGLE_TAP: unregister_code16(KC_RCBR); break; // fast typing, ((
         default: break;
     }
     td_state = TD_NONE;
@@ -501,4 +501,3 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   }
   return true;
 }
-
