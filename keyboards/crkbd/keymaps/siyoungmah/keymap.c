@@ -138,9 +138,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|         |             |        CTRL |     OPT?ALT |         CMD |        |                    |        |         CMD |     OPT/ALT |        CTRL |             |        | 
          KC_NO,   LT(0,KC_C), LCTL_T(KC_R), LALT_T(KC_S), LGUI_T(KC_T),    KC_G,                         KC_M, RGUI_T(KC_N), RALT_T(KC_E), RCTL_T(KC_I),         KC_A,   KC_NO, 
   //|---------+-------------+-------------+-------------+-------------+--------|                    |--------+-------------+-------------+-------------+-------------+--------| 
-  //| Mission |           Q |           J |           V |           D |      K |                    |      X |           H |         , ! |         . ? |         / \ |   KOR/ |
+  //| Mission |           Q |           J |           V |           D |      K |                    |      X |           H |         / \ |         , ! |         . ? |   KOR/ |
   //| Control |             |             |       PASTE |             |        |                    |    CUT |             |             |             |             |    ENG |    
-       KC_MCTL,         KC_Q,         KC_J,   LT(0,KC_V),         KC_D,    KC_K,                   LT(0,KC_X),         KC_H,      KC_COMM,       KC_DOT,      KC_SLSH,   DF(1),
+       KC_MCTL,         KC_Q,         KC_J,   LT(0,KC_V),         KC_D,    KC_K,                   LT(0,KC_X),         KC_H,      KC_SLSH,      KC_COMM,       KC_DOT,   DF(1),
   //|---------+-------------+-------------+-------------+-------------+---------------`     |----------------+-------------+-------------+-------------+-------------+--------|
   //                                      |         TAB |       SPACE |         SHIFT |     |          ENTER |   BACKSPACE |      TOGGLE |        
   //                                      |         NAV |     SYMBOLS |        Toggle |     |            NUM |             |     NUM/NAV |        
@@ -158,9 +158,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|         |        CTRL |     OPT/ALT |         CMD |       SHIFT |        |                    |        |       SHIFT |         CMD |     OPT/ALT |        CTRL |        | 
          KC_NO, LCTL_T(KC_A), LALT_T(KC_S),   LGUI(KC_D), LSFT_T(KC_F),    KC_G,                         KC_H,  RSFT_T(KC_J), RGUI_T(KC_K),RALT_T(KC_L),RCTL_T(KC_QUOT), KC_NO,
   //|---------+-------------+-------------+-------------+-------------+--------|                    |--------+-------------+-------------+-------------+-------------+--------| 
-  //| Mission |           Z |           X |           C |           V |      B |                    |      N |           M |         , ! |         . ? |         / \ |   KOR/ |
+  //| Mission |           Z |           X |           C |           V |      B |                    |      N |           M |         / \ |         , ! |         . ? |   KOR/ |
   //| Control |        UNDO |         CUT |        COPY |             |        |                    |        |             |             |             |             |    ENG |    
-       KC_MCTL,   LT(1,KC_Z),   LT(1,KC_X),   LT(1,KC_C),   LT(1,KC_V),    KC_B,                         KC_N,         KC_M,      KC_COMM,       KC_DOT,      KC_SLSH,   DF(0),
+       KC_MCTL,   LT(1,KC_Z),   LT(1,KC_X),   LT(1,KC_C),   LT(1,KC_V),    KC_B,                         KC_N,         KC_M,      KC_SLSH,      KC_COMM,       KC_DOT,   DF(0),
   //|---------+-------------+-------------+-------------+-------------+---------------`     |----------------+-------------+-------------+-------------+-------------+--------|
   //                                      |         TAB |       SPACE |         SHIFT |     |          ENTER |   BACKSPACE |      TOGGLE |        
   //                                      |         NAV |     SYMBOLS |        Toggle |     |            NUM |             |     NUM/NAV |        
