@@ -41,8 +41,8 @@ enum custom_keycodes {
 // custom shift keys
 // link: https://getreuer.info/posts/keyboards/custom-shift-keys/index.html
 const custom_shift_key_t custom_shift_keys[] = {
-//   {KC_DOT , KC_QUES}, // Shift . is ?
-//   {KC_COMM, KC_EXLM}, // Shift , is !
+  {KC_DOT , KC_QUES}, // Shift . is ?
+  {KC_COMM, KC_EXLM}, // Shift , is !
 //   {KC_UNDS, KC_MINS}, // Shift _ is -
 //   {KC_SLSH, KC_BSLS}, // Shift / is backslash
 //   {KC_AMPR, KC_PIPE}, // Shift & is |
@@ -131,8 +131,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // base, Canary
   [0] = LAYOUT_split_3x6_3(
   //,--------------------------------------------------------------------------.                    ,-------------------------------------------------------------------------.
-  //|     ESC |           W |           L |           Y |           P |      B |                    |      Z |           F |           O |           U |         DEL |        |
-        KC_ESC,         KC_W,         KC_L,         KC_Y,         KC_P,    KC_B,                  LT(0, KC_Z),         KC_F,         KC_O,         KC_U,      KC_DEL,    KC_NO,       
+  //|     ESC |           W |           L |           Y |           P |      B |                    |      Z |           F |           O |           U |             |    DEL |
+        KC_ESC,         KC_W,         KC_L,         KC_Y,         KC_P,    KC_B,                  LT(0, KC_Z),         KC_F,         KC_O,         KC_U,        KC_NO,  KC_DEL,       
   //|---------+-------------+-------------+-------------+-------------+--------|                    |--------+-------------+-------------+-------------+-------------+--------| 
   //|         |           C |           R |           S |           T |      G |                    |      M |           N |           E |           I |           A |        |
   //|         |             |        CTRL |     OPT?ALT |         CMD |        |                    |        |         CMD |     OPT/ALT |        CTRL |             |        | 
@@ -192,17 +192,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // Symbols
   [3] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-  //|        |      ` |      # |      @ |      " |      * |                    |      ^ |      + |      ! |      ? |       |         |
-        KC_NO,  KC_GRV, KC_HASH,   KC_AT,  KC_DQT, KC_ASTR,                      KC_CIRC, KC_PLUS, KC_EXLM, KC_QUES,  KC_NO,    KC_NO,
+  //|        |      ` |      < |      | |      - |      * |                    |      ^ |      @ |      ; |      : |      " |        |
+        KC_NO,  KC_GRV,   KC_LT, KC_PIPE, KC_MINS, KC_ASTR,                      KC_CIRC,   KC_AT, KC_SCLN, KC_COLN,  KC_DQT,   KC_NO,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-  //|        |      < |      > |      & |      ' |        |                    |      % |    = + |      | |      ( |      ) |        |
-        KC_NO,   KC_LT,   KC_GT, KC_AMPR, KC_QUOT,   KC_NO,                      KC_PERC, KC_EQL, KC_PIPE, KC_LPRN, KC_RPRN,   KC_NO, 
+  //|        |      + |      > |      & |      = |      ~ |                    |      % |      ( |      { |      [ |      ' |        |
+        KC_NO, KC_PLUS,   KC_GT, KC_AMPR,  KC_EQL, KC_TILD,                      KC_PERC, KC_LPRN, KC_LCBR, KC_LBRC, KC_QUOT,   KC_NO, 
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-  //|        |        |        |      ~ |      _ |        |                    |      $ |      - |      ; |      : |      \ |        |
-        KC_NO,   KC_NO,   KC_NO, KC_TILD, KC_UNDS,   KC_NO,                      KC_DLR,  KC_MINS, KC_SCLN, KC_COLN, KC_BSLS,   KC_NO, 
+  //|        |        |        |      # |      _ |        |                    |      $ |      ) |      } |      ] |      \ |        |
+        KC_NO,   KC_NO,   KC_NO, KC_HASH, KC_UNDS,   KC_NO,                      KC_DLR,  KC_RPRN, KC_RCBR, KC_RBRC, KC_BSLS,   KC_NO, 
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                      //|        |        |  SHIFT |  |  ( [ { |  } ] ) |        |
-                                            KC_NO, KC_TRNS,TD(TD_SHFT),TD(TD_LP),TD(TD_RP),   KC_NO
+                                      //|        |        |        |  |        |        |        |
+                                            KC_NO, KC_TRNS,   KC_NO,      KC_NO,   KC_NO,   KC_NO
                                       //`--------------------------'  `--------------------------'
   ),
 
