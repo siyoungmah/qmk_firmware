@@ -156,11 +156,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|---------+-------------+-------------+-------------+-------------+--------|                    |--------+-------------+-------------+-------------+-------------+--------|
   //|         |           A |           S |           D |           F |      G |                    |      H |           J |           K |           L |        ' "  |        |
   //|         |        CTRL |     OPT/ALT |         CMD |       SHIFT |        |                    |        |       SHIFT |         CMD |     OPT/ALT |        CTRL |        | 
-         KC_NO, LCTL_T(KC_A), LALT_T(KC_S),   LGUI(KC_D), LSFT_T(KC_F),    KC_G,                         KC_H,  RSFT_T(KC_J), RGUI_T(KC_K),RALT_T(KC_L),RCTL_T(KC_QUOT), KC_NO,
+         KC_NO,         KC_A, LCTL_T(KC_S), LALT_T(KC_D), LGUI_T(KC_F),    KC_G,                         KC_H,  RGUI_T(KC_J), RALT_T(KC_K),RCTL_T(KC_L),      KC_QUOT, KC_NO,
   //|---------+-------------+-------------+-------------+-------------+--------|                    |--------+-------------+-------------+-------------+-------------+--------| 
   //| Mission |           Z |           X |           C |           V |      B |                    |      N |           M |         / \ |         , ! |         . ? |   KOR/ |
   //| Control |        UNDO |         CUT |        COPY |             |        |                    |        |             |             |             |             |    ENG |    
-       KC_MCTL,   LT(1,KC_Z),   LT(1,KC_X),   LT(1,KC_C),   LT(1,KC_V),    KC_B,                         KC_N,         KC_M,      KC_SLSH,      KC_COMM,       KC_DOT,   DF(0),
+       KC_MCTL,         KC_Z,        KC_X,         KC_C,          KC_V,    KC_B,                         KC_N,         KC_M,      KC_SLSH,      KC_COMM,       KC_DOT,   DF(0),
   //|---------+-------------+-------------+-------------+-------------+---------------`     |----------------+-------------+-------------+-------------+-------------+--------|
   //                                      |         TAB |       SPACE |         SHIFT |     |          ENTER |   BACKSPACE |      TOGGLE |        
   //                                      |         NAV |     SYMBOLS |        Toggle |     |            NUM |             |     NUM/NAV |        
