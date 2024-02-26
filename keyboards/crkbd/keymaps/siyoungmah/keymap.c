@@ -190,9 +190,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|        |    F11 |     F4 |     F5 |     F6 |        |                    |        |        |        |         | revert |        |
         KC_NO,  KC_F11,   KC_P4,   KC_P5,   KC_P6, KC_MINS,                      KC_PERC,   O_GUI,   O_ALT,   O_CTRL, CG_NORM,   KC_NO, 
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+---------+--------+--------|
-  //|        |        |      1 |      2 |      3 |      + |                    |      $ |      . |    / \ |     , ! |      : |        |
+  //|        |        |      1 |      2 |      3 |      + |                    |      $ |        |        |         |        |        |
   //|        |    F10 |     F1 |     F2 |     F3 |        |                    |        |        |        |         |        |        |
-        KC_NO,  KC_F10,   KC_P1,   KC_P2,   KC_P3, KC_PLUS,                       KC_DLR,  KC_DOT, KC_SLSH,  KC_COMM, KC_COLN,   KC_NO, 
+        KC_NO,  KC_F10,   KC_P1,   KC_P2,   KC_P3, KC_PLUS,                       KC_DLR,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, 
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+---------+--------+--------|
                                       //|    TAB |  SPACE |  ENTER |  |        | SHIFT  |    NAV |
                                       //|        |        |        |  |        |        |        |
@@ -224,14 +224,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|        |        | Control| Portion| Section| Screen |                    |        |        |        |        |        |        |
         KC_NO,  KC_ESC, KC_MCTL,SCRN_CAP4,SCRN_CAP5,KC_PSCR,                     KC_PGUP, KC_HOME,   KC_UP,  KC_END,  KC_DEL,   KC_NO, 
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-  //|        |  shift |    CTRL| OPT/ALT|    CMD |        |                    |   PGDN |      ← |      ↓ |      → |   BSPC |        |
-        KC_NO,  O_SHFT,  O_CTRL,   O_ALT,   O_GUI,   KC_NO,                      KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, KC_BSPC,   KC_NO, 
+  //|        |  shift |    CTRL| OPT/ALT|    CMD |        |                    |   PGDN |      ← |      ↓ |      → |        |        |
+        KC_NO,  O_SHFT,  O_CTRL,   O_ALT,   O_GUI,   KC_NO,                      KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT,   KC_NO,   KC_NO, 
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
   //|        |   Undo |    Cut |  Paste |   Copy |        |                    |        |   Zoom |   Zoom |Decrease|Increase|        |
   //|        |        |        |        |        |        |                    |        |    Out |     In |   Size |   Size |        |
         KC_NO,  U_UNDO,   U_CUT, U_PASTE,  U_COPY,   KC_NO,                        KC_NO,ZOOM_OUT, ZOOM_IN,DEC_SIZE,INC_SIZE,   KC_NO, 
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                      //|        |        |        |  |        |        |   BASE |
+                                      //|        |        |        |  |        |        |        |
                                             KC_NO,   KC_NO, KC_TRNS,       KC_NO,  KC_NO,    KC_NO         
                                       //`--------------------------'  `--------------------------'
   )
@@ -427,15 +427,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // };
 
 // Set a long-ish tapping term for tap-dance keys
-// uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record){
-//     switch(keycode) {
-//         // case TD(TD_SHFT): return 275;
-//         case TD(TD_LAYR): return 275;
-//         case O_SHFT: return 275;
-//         case KC_SPC: return 100;
-//         default: return TAPPING_TERM;
-//     }
-// }
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record){
+    switch(keycode) {
+        // case TD(TD_SHFT): return 275;
+        // case TD(TD_LAYR): return 275;
+        case O_SHFT: return 275;
+        case KC_SPC: return 100;
+        default: return TAPPING_TERM;
+    }
+}
 
 
 
