@@ -33,7 +33,11 @@
 
 // custom keycodes for Macros
 enum custom_keycodes {
-    INC_SIZE = SAFE_RANGE,
+    U_COPY = SAFE_RANGE,
+    U_CUT,
+    U_PASTE,
+    U_UNDO,
+    INC_SIZE,
     DEC_SIZE,
     ZOOM_IN,
     ZOOM_OUT,
@@ -77,9 +81,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //  |      Q |      J |      V |      D |      K |        |        |      X |      H |    / \ |    , ? |    . ! |
              KC_Q,    KC_J,    KC_V,    KC_D,    KC_K,   KC_NO,   KC_NO,    KC_X,    KC_H, KC_SLSH, KC_COMM,  KC_DOT,
     //  |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-    //  |        |        |        |    Tab |  Space |      Enter      |  Shift |   BSPC |        |        | Canary |
+    //  |        |        |        |    Tab |  SPACE |      Enter      |  Shift |   BSPC |        |        | Canary |
     //  |        |        |        |        | SYMBOL |       NAV       |        |    NUM |        |        | /Qwerty|
-            KC_NO,   KC_NO,   KC_NO,  KC_TAB,LT(3,KC_SPC),LT(4,KC_ENT), O_SHFT,LT(2,KC_BSPC), KC_NO,  KC_NO,   DF(1)
+            KC_NO,   KC_NO,   KC_NO,  KC_TAB,LT(3,KC_SPC),LT(4,KC_ENT),O_SHFT,LT(2,KC_BSPC),  KC_NO,  KC_NO,   DF(1)
     //  '--------'--------'--------'--------'--------'--------'--------'--------'--------'--------'--------'--------'
     ),
 
@@ -96,9 +100,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //  |      Z |      X |      C |      V |      B |        |        |      N |      M |    / \ |    , ! |    . ? |
              KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,   KC_NO,   KC_NO,    KC_N,    KC_M, KC_SLSH, KC_COMM,  KC_DOT,
     //  |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-    //  |        |        |        |    Tab |  Space |      Enter      |  Shift |   BSPC |        |        | Canary |
+    //  |        |        |        |    Tab |  SPACE |      Enter      |  Shift |   BSPC |        |        | Canary |
     //  |        |        |        |        | SYMBOL |       NAV       |        |    NUM |        |        | /Qwerty|
-            KC_NO,   KC_NO,   KC_NO,  KC_TAB,LT(3,KC_SPC),LT(4,KC_ENT), O_SHFT,LT(2,KC_BSPC), KC_NO,  KC_NO,   DF(0)
+            KC_NO,   KC_NO,   KC_NO,  KC_TAB,LT(3,KC_SPC),LT(4,KC_ENT),O_SHFT,LT(2,KC_BSPC),  KC_NO,  KC_NO,    DF(0)
     //  '--------'--------'--------'--------'--------'--------'--------'--------'--------'--------'--------'--------'
     ),
 
@@ -117,20 +121,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //  |    F10 |     F1 |     F2 |     F3 |        |        |        |        |        |        |        |        |
            KC_F10,   KC_P1,   KC_P2,   KC_P3, KC_PLUS,   KC_NO,   KC_NO,  KC_DLR,   KC_NO,   KC_NO,   KC_NO,   KC_NO, 
     //  |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-    //  |        |        |        |    Tab |  Space |      Enter      |  Shift |        |        |        |        |
+    //  |        |        |        |    Tab |  Enter |      Space      |  Shift |        |        |        |        |
     //  |        |        |        |        |        |                 |        |        |        |        |        |
-            KC_NO,   KC_NO,   KC_NO,  KC_TAB,  KC_SPC,     KC_ENT,        O_SHFT, KC_TRNS,   KC_NO,   KC_NO,   KC_NO
+            KC_NO,   KC_NO,   KC_NO,  KC_TAB,  KC_ENT,     KC_SPC,        O_SHFT, KC_TRNS,   KC_NO,   KC_NO,   KC_NO
     //  '--------'--------'--------'--------'--------'--------'--------'--------'--------'--------'--------'--------'
     ),
 
 // SYMBOLS
     [3] = LAYOUT_planck_mit(
     //  .--------.--------.--------.--------.--------.--------.--------.--------.--------.--------.--------.--------.
-    //  |      ~ |      & |      | |      = |      * |        |        |      ^ |      " |      ) |      } |      ] |
-          KC_TILD, KC_AMPR, KC_PIPE,  KC_EQL, KC_ASTR,   KC_NO,   KC_NO, KC_CIRC,  KC_DQT, KC_RPRN, KC_RCBR, KC_RBRC,
+    //  |      ~ |      & |      | |      - |      * |        |        |      ^ |      " |      ) |      } |      ] |
+          KC_TILD, KC_AMPR, KC_PIPE, KC_MINS, KC_ASTR,   KC_NO,   KC_NO, KC_CIRC,  KC_DQT, KC_RPRN, KC_RCBR, KC_RBRC,
     //  |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-    //  |      ` |    CTRL| OPT/ALT|    CMD |      - |        |        |      % |      ' |      ( |      { |      [ |
-           KC_GRV,  O_CTRL,   O_ALT,   O_GUI, KC_MINS,   KC_NO,   KC_NO,  KC_PERC, KC_QUOT, KC_LPRN, KC_LCBR, KC_LBRC,
+    //  |      ` |    CTRL| OPT/ALT|    CMD |      = |        |        |      % |      ' |      ( |      { |      [ |
+           KC_GRV,  O_CTRL,   O_ALT,   O_GUI,  KC_EQL,   KC_NO,   KC_NO,  KC_PERC, KC_QUOT, KC_LPRN, KC_LCBR, KC_LBRC,
     //  |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
     //  |      < |      > |      # |      _ |      + |        |        |      $ |      @ |      \ |      ; |      : |
             KC_LT,   KC_GT, KC_HASH, KC_UNDS, KC_PLUS,   KC_NO,   KC_NO,  KC_DLR,   KC_AT, KC_BSLS, KC_SCLN, KC_COLN,
@@ -150,9 +154,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //  |  shift |    CTRL| OPT/ALT|    CMD |        |        |        |   PGDN |      ← |      ↓ |      → |        |
            O_SHFT,  O_CTRL,   O_ALT,   O_GUI,   KC_NO,   KC_NO,   KC_NO, KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT,   KC_NO,
     //  |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-    //  |        |        |        |        |        |        |        |        |   Zoom |   Zoom |Decrease|Increase|
+    //  |   Undo |    Cut |  Paste |   Copy |        |        |        |        |   Zoom |   Zoom |Decrease|Increase|
     //  |        |        |        |        |        |        |        |        |    Out |     In |   Size |   Size |
-            KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,ZOOM_OUT, ZOOM_IN,DEC_SIZE,INC_SIZE,
+           U_UNDO,   U_CUT, U_PASTE,  U_COPY,   KC_NO,   KC_NO,   KC_NO,   KC_NO,ZOOM_OUT, ZOOM_IN,DEC_SIZE,INC_SIZE,
     //  |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
     //  |        |        |        |        |        |                 |  Shift |        |        |        |        |
             KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,     KC_TRNS,       O_SHFT,   KC_NO,   KC_NO,  KC_NO,    KC_NO
@@ -183,6 +187,42 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 //   }
 
   switch (keycode) {
+    case U_UNDO:
+        if (record->event.pressed) {
+            if(host_os == OS_WINDOWS) {
+                tap_code16(C(KC_Z));
+            } else {
+                tap_code16(G(KC_Z));
+            }
+        }
+        break;
+    case U_PASTE:
+        if (record->event.pressed) {
+            if(host_os == OS_WINDOWS) {
+                tap_code16(C(KC_V));
+            } else {
+                tap_code16(G(KC_V));
+            }
+        }
+        break;
+    case U_COPY:
+        if (record->event.pressed) {
+            if(host_os == OS_WINDOWS) {
+                tap_code16(C(KC_C));
+            } else {
+                tap_code16(G(KC_C));
+            }
+        }
+        break;
+    case U_CUT:
+        if (record->event.pressed) {
+            if(host_os == OS_WINDOWS) {
+                tap_code16(C(KC_X));
+            } else {
+                tap_code16(G(KC_X));
+            }
+        }
+        break;
     case SCRN_CAP4:
         if (record->event.pressed) {
             if(host_os == OS_WINDOWS) {
